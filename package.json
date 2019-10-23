@@ -1,0 +1,15 @@
+{
+  "name": "dafnytely",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:maxwowo/dafnytely.git",
+  "author": "Max <maxwo@protonmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "concurrently \"cd backend && node server.js\" \"cd frontend && yarn start\"",
+    "postinstall": "cd frontend && yarn install && cd ../backend && yarn install"
+  },
+  "dependencies": {
+    "concurrently": "^5.0.0"
+  }
+}
