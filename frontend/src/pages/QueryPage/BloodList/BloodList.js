@@ -1,6 +1,6 @@
 import React from 'react';
 import { Descriptions, List, Typography } from 'antd';
-import styles from './BloodList.module.less'
+import styles from './BloodList.module.less';
 
 const BloodList = (
   {

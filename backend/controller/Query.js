@@ -1,4 +1,5 @@
-const bloodDb = require("../schema/db");
+const bloodDb = require('../schema/db');
+
 // console.log(bloodDb.bloods);
 
 class Query {
@@ -21,14 +22,17 @@ class Query {
   }
 
   static async get_by_type_date(body) {
-    return { yes: "yes" };
+    return { yes: 'yes' };
   }
 
-  static async get_all(body) {}
+  static async get_all(body) {
+  }
+
   static async get_all_by_date(body) {
-    return { yes: "yes" };
+    return { yes: 'yes' };
   }
 }
-const result = Query.get_by_type("A", false);
+
+const result = Query.get_by_type('A', false);
 console.log(result);
 module.exports = Query;

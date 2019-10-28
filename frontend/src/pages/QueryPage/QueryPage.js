@@ -1,6 +1,7 @@
 import React from 'react';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import { Layout } from 'antd';
+import Axios from 'axios';
 import SidePanel from './SidePanel/SidePanel';
 import BloodList from './BloodList/BloodList';
 import styles from './QueryPage.module.less';
@@ -25,7 +26,14 @@ class QueryPage extends React.Component {
           'volume-ml': 500
         }
       ]
-    })
+    });
+    Axios.post(
+      '/api/query'
+    ).then(
+      res => {
+        console.log(res.json());
+      }
+    )
   }
 
   onBloodTypeChange = (

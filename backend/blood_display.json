@@ -1,27 +1,27 @@
 [
-    {
-        "type": "A",
-        "use-by-date": "2019-09-12",
-        "volume-ml": 500 
-    },
-    {
-        "type": "A",
-        "use-by-date": "2019-09-12",
-        "volume-ml": 500 
-    },
-    {
-        "type": "A",
-        "use-by-date": "2019-09-12",
-        "volume-ml": 500 
-    },
-    {
-        "type": "A",
-        "use-by-date": "2019-09-12",
-        "volume-ml": 500 
-    },
-    {
-        "type": "A",
-        "use-by-date": "2019-09-12",
-        "volume-ml": 500 
-    }
+  {
+    "type": "A",
+    "use-by-date": "2019-09-12",
+    "volume-ml": 500
+  },
+  {
+    "type": "A",
+    "use-by-date": "2019-09-12",
+    "volume-ml": 500
+  },
+  {
+    "type": "A",
+    "use-by-date": "2019-09-12",
+    "volume-ml": 500
+  },
+  {
+    "type": "A",
+    "use-by-date": "2019-09-12",
+    "volume-ml": 500
+  },
+  {
+    "type": "A",
+    "use-by-date": "2019-09-12",
+    "volume-ml": 500
+  }
 ]

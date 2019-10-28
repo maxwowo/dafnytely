@@ -42,7 +42,7 @@ class Navbar extends React.Component {
                 {
                   selected: null
                 }
-              )
+              );
             }
           }
         >
@@ -64,7 +64,7 @@ class Navbar extends React.Component {
                 {
                   selected: e.key
                 }
-              )
+              );
             }
           }
           className={styles.menu}
@@ -87,7 +87,7 @@ class Navbar extends React.Component {
           }
         </Menu>
       </Layout.Header>
-    )
+    );
   }
 }
 
