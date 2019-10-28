@@ -1,7 +1,9 @@
 
 class Add {
 
-    
+    static async add(body){
+        
+    }
 
 }
 

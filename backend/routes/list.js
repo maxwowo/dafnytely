@@ -1,10 +1,11 @@
 const express = require('express');
-const Order=require("../controller/Order");
+const List=require("../controller/List");
+
 const router = express.Router();
 router.post("/",(req,res)=>{
-    if(typeof Order[req.body.method] === "function"){
+    if(typeof List[req.body.method] === "function"){
         //valid method
-        Order[req.body.method](req.body).then(results=>{
+        List[req.body.method](req.body).then(results=>{
             res.send(results)
         })
 

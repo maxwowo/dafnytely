@@ -1,11 +1,11 @@
 const express = require('express');
 const Add=require("../controller/Add");
 
-const add = express.Router();
-add.post("/",(req,res)=>{
+const router = express.Router();
+router.post("/",(req,res)=>{
     if(typeof Add[req.body.method] === "function"){
         //valid method
-        add[req.body.method](req.body).then(results=>{
+        Add[req.body.method](req.body).then(results=>{
             res.send(results)
         })
 
@@ -14,6 +14,6 @@ add.post("/",(req,res)=>{
     }
 });
 
-module.exports = add;
+module.exports = router;
 
 
