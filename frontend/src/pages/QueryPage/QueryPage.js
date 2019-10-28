@@ -8,13 +8,17 @@ const QueryPage = () => {
       <Layout.Sider>
         <Menu>
           <Menu.Item>
-            <h1>anoeuh</h1>
+            noeu
           </Menu.Item>
           <Menu.Item>
-            <h1>oaentuh</h1>
+            oaentuh
           </Menu.Item>
         </Menu>
       </Layout.Sider>
+
+      <Layout.Content>
+        Some content
+      </Layout.Content>
     </FullSizeLayout>
   )
 };
