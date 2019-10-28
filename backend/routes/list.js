@@ -1,10 +1,11 @@
 const express = require('express');
-const Expire=require("../controller/Expire");
+const List=require("../controller/List");
+
 const router = express.Router();
 router.post("/",(req,res)=>{
-    if(typeof Expire[req.body.method] === "function"){
+    if(typeof List[req.body.method] === "function"){
         //valid method
-        Expire[req.body.method](req.body).then(results=>{
+        List[req.body.method](req.body).then(results=>{
             res.send(results)
         })
 
