@@ -3,49 +3,61 @@ import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import { Layout } from 'antd';
 import SidePanel from './SidePanel/SidePanel';
 import BloodList from './BloodList/BloodList';
+import styles from './QueryPage.module.less';
 
-const QueryPage = () => {
+class QueryPage extends React.Component {
 
-  const bloodTypes = ['O', 'A', 'B', 'AB',];
-  const bloodList = [
-    {
-      'type': 'A',
-      'arrival_date': '2019-08-12',
-      'use-by-date': '2019-09-12',
-      'donor-id': 'D-12345',
-      'lab-id': 'L-12345',
-      'volume-ml': 500
-    }
-  ];
+  state = {
+    bloodTypes: [],
+    bloodList: []
+  };
 
-  const onBloodTypeChange = (
+  componentDidMount() {
+    this.setState({
+      bloodTypes: ['O', 'A', 'B', 'AB'],
+      bloodList: [
+        {
+          'type': 'A',
+          'arrival_date': '2019-08-12',
+          'use-by-date': '2019-09-12',
+          'donor-id': 'D-12345',
+          'lab-id': 'L-12345',
+          'volume-ml': 500
+        }
+      ]
+    })
+  }
+
+  onBloodTypeChange = (
     value
   ) => {
     console.log(value);
   };
 
-  const onMinimumExpiryChange = (
+  onMinimumExpiryChange = (
     value
   ) => {
     console.log(value);
   };
 
-  return (
-    <FullSizeLayout>
-      <SidePanel
-        bloodTypes={bloodTypes}
-        onBloodTypeChange={onBloodTypeChange}
-        onMinimumExpiryChange={onMinimumExpiryChange}
-      />
-      <Layout.Content
-        style={{ padding: 10 }}
-      >
-        <BloodList
-          bloodList={bloodList}
+  render() {
+    return (
+      <FullSizeLayout>
+        <SidePanel
+          bloodTypes={this.state.bloodTypes}
+          onBloodTypeChange={this.onBloodTypeChange}
+          onMinimumExpiryChange={this.onMinimumExpiryChange}
         />
-      </Layout.Content>
-    </FullSizeLayout>
-  );
-};
+        <Layout.Content
+          className={styles.content}
+        >
+          <BloodList
+            bloodList={this.state.bloodList}
+          />
+        </Layout.Content>
+      </FullSizeLayout>
+    );
+  }
+}
 
 export default QueryPage;
