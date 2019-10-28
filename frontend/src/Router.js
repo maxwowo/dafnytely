@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import FullSizeLayout from './components/FullSizeLayout/FullSizeLayout';
 import Navbar from './components/Navbar/Navbar';
-import App from './App';
+import LandingPage from './pages/LandingPage/LandingPage';
 import QueryPage from './pages/QueryPage/QueryPage';
 
 const Router = () => (
@@ -14,7 +14,7 @@ const Router = () => (
           <Route
             exact
             path='/'
-            component={App}
+            component={LandingPage}
           />
           <Route
             path='/query'

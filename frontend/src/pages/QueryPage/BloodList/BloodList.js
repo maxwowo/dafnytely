@@ -15,7 +15,7 @@ const BloodList = (
         Blood List
       </Typography.Title>
     }
-    style={{backgroundColor: 'white'}}
+    style={{ backgroundColor: 'white' }}
     dataSource={bloodList}
     renderItem={item => (
       <List.Item>
