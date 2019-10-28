@@ -1,6 +1,7 @@
 import React from 'react';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import { Icon, Layout, Menu } from 'antd';
+import Center from '../../components/Center/Center';
 
 const QueryPage = () => {
   return (
@@ -27,7 +28,9 @@ const QueryPage = () => {
       </Layout.Sider>
 
       <Layout.Content>
-        Some content
+        <Center>
+          Some content
+        </Center>
       </Layout.Content>
     </FullSizeLayout>
   )
