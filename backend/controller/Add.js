@@ -1,4 +1,7 @@
-const bloodDB = require('../schema/db')
+const schema = require('../schema/db');
+const bloodDb = schema.db;
+const Blood = schema.Blood;
+
 class Add {
     // Takes a blood object (as specified in db) and adds it to the bloodDb
     // database

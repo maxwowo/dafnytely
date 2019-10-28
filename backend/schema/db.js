@@ -69,4 +69,7 @@ class Db{
 }
 
 const database = new Db();
-module.exports =database;
+module.exports = {
+    db: database,
+    Blood: Blood
+}
