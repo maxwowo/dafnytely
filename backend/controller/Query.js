@@ -13,9 +13,7 @@ class Query {
 
     static async get_all(body) {
 
-        return { yes:"yes"}
     }
-
     static async get_all_by_date(body) {
 
         return { yes:"yes"}
