@@ -11,6 +11,7 @@ const SidePanel = (
   }
 ) => (
   <Layout.Sider
+    width='20%'
     className={styles.sider}
   >
     <Menu
@@ -26,6 +27,7 @@ const SidePanel = (
         mode='date'
         placeholder='Filter by minimum expiry date'
         showToday={false}
+        className={styles.datePicker}
       />
 
     </Menu>

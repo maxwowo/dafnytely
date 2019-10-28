@@ -6,7 +6,7 @@ import BloodList from './BloodList/BloodList';
 
 const QueryPage = () => {
 
-  const bloodTypes = ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'];
+  const bloodTypes = ['O', 'A', 'B', 'AB',];
   const bloodList = [
     {
       'type': 'A',
