@@ -15,7 +15,7 @@ const SidePanel = (
     className={styles.sider}
   >
     <Menu
-      theme='dark'
+      theme='light'
     >
       <BloodTypeFilter
         bloodTypes={bloodTypes}

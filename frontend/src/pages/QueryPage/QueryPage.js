@@ -3,6 +3,7 @@ import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import { Layout } from 'antd';
 import SidePanel from './SidePanel/SidePanel';
 import BloodList from './BloodList/BloodList';
+import Navbar from '../../components/Navbar/Navbar';
 import styles from './QueryPage.module.less';
 
 class QueryPage extends React.Component {

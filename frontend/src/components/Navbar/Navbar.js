@@ -1,51 +1,21 @@
 import React from 'react';
-import { Button, Col, Icon, Layout, Row } from 'antd';
+import { Layout, Menu } from 'antd';
 import styles from './Navbar.module.less';
 
 const { Header } = Layout;
 
-const Navbar = (
-  {
-    setSidePanelState,
-    sidePanelCollapsed
-  }
-) => (
-  <Header
-    className={styles.Navbar}
-  >
-    <Row
-      type="flex"
-      align="middle"
-      justify="space-between"
-      className={styles.navRow}
+const Navbar = () => (
+  <Header className={styles.Navbar}>
+    <div className="logo"/>
+    <Menu
+      theme="dark"
+      mode="horizontal"
+      style={{ lineHeight: '64px' }}
     >
-      <Col>
-        <Icon
-          type={sidePanelCollapsed ? 'menu-unfold' : 'menu-fold'}
-          onClick={() => setSidePanelState(!sidePanelCollapsed)}
-        />
-      </Col>
-
-      <Col>
-        <Button
-          className={styles.navButton}
-        >
-          <Icon
-            type='login'
-          />
-          Sign In
-        </Button>
-
-        <Button
-          className={styles.navButton}
-        >
-          <Icon
-            type='plus-circle'
-          />
-          Sign Up
-        </Button>
-      </Col>
-    </Row>
+      <Menu.Item key="1">nav 1</Menu.Item>
+      <Menu.Item key="2">nav 2</Menu.Item>
+      <Menu.Item key="3">nav 3</Menu.Item>
+    </Menu>
   </Header>
 );
 
