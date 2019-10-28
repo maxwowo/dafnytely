@@ -6,12 +6,22 @@ const QueryPage = () => {
   return (
     <FullSizeLayout>
       <Layout.Sider>
-        <Menu>
+        <Menu
+          theme='dark'
+        >
           <Menu.Item>
-            noeu
+            <Icon
+              type='filter'
+            />
+            <span>
+              boom boom
+            </span>
           </Menu.Item>
           <Menu.Item>
-            oaentuh
+            <Icon
+              type='filter'
+            />
+            <span>bang bang</span>
           </Menu.Item>
         </Menu>
       </Layout.Sider>
