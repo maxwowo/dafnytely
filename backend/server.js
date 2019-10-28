@@ -1,6 +1,8 @@
 const query = require('./routes/query');
 const add = require('./routes/add');
 const order = require('./routes/order');
+const list = require('./routes/list');
+const expire = require('./routes/expire');
 /* Load packages */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -38,5 +40,7 @@ router.get(
 app.use('/query', query);
 app.use('/add', add);
 app.use('/order', order);
+app.use('/list', list);
+app.use('/expire', expire);
 /* Launch backend into a port */
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
