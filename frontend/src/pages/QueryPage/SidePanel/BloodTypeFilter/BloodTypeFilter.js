@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
+import styles from './BloodTypeFilter.module.less';
 
 const BloodTypeFilter = (
   {
@@ -10,7 +11,7 @@ const BloodTypeFilter = (
   <Select
     placeholder="Filter by blood type"
     optionFilterProp="children"
-    style={{ width: '100%' }}
+    className={styles.select}
     onChange={onBloodTypeChange}
     filterOption={(input, option) =>
       option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0

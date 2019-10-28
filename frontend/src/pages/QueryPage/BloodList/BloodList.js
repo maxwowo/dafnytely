@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions, List, Typography } from 'antd';
+import styles from './BloodList.module.less'
 
 const BloodList = (
   {
@@ -9,7 +10,7 @@ const BloodList = (
   <List
     header={
       <Typography.Title
-        style={{ textAlign: 'center' }}
+        className={styles.typographyTitle}
       >
         Blood List
       </Typography.Title>
@@ -20,7 +21,7 @@ const BloodList = (
       <List.Item>
         <Descriptions
           title={item.type}
-          style={{ padding: 10 }}
+          className={styles.descriptions}
         >
           <Descriptions.Item label="Type">{item.type}</Descriptions.Item>
           <Descriptions.Item label="Arrival Date">{item['arrival_date']}</Descriptions.Item>

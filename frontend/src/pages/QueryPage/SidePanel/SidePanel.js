@@ -1,6 +1,7 @@
 import React from 'react';
 import { DatePicker, Layout, Menu } from 'antd';
 import BloodTypeFilter from './BloodTypeFilter/BloodTypeFilter';
+import styles from './SidePanel.module.less'
 
 const SidePanel = (
   {
@@ -10,7 +11,7 @@ const SidePanel = (
   }
 ) => (
   <Layout.Sider
-    style={{ padding: 10 }}
+    className={styles.sider}
   >
     <Menu
       theme='dark'
