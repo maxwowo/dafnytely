@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Blood = require('./Blood');
 const l = [
   {
     'id': 12345,
@@ -47,29 +48,30 @@ const l = [
   }
 ];
 
-class Blood {
-  constructor(item) {
-    this.id = item.id;
-    this.type = item.type;
-    this.arrival_date = item.arrival_date;
-    this.use_by_date = item.use_by_date;
-    this.donor_id = item.donor_id;
-    this.lab_id = item.lab_id;
-    this.volume_ml = item.volume_ml;
-  }
-}
 
 class Db {
   constructor() {
     this.bloods = [];
+    this.orders = [];
     l.forEach(item => {
-      this.bloods.push(new Blood(item));
+      this.bloods.push(new Blood(...item));
     });
+  }
+  add_order(order){
+
+  }
+  delete_order(key){
+
+  }
+  add_blood(blood){
+
+  }
+  delete_blood(key){
+    
   }
 }
 
 const database = new Db();
 module.exports = {
-  db: database,
-  Blood: Blood
+  db: database
 };

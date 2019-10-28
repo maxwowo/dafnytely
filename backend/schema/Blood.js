@@ -1,5 +1,7 @@
+
 class Blood {
-  constructor(type, arrival_date, use_by_date, donor_id, lab_id, volume_ml) {
+  constructor(id,type,arrival_date,use_by_date,donor_id,lab_id,volume_ml) {
+    this.id = id;
     this.type = type;
     this.arrival_date = arrival_date;
     this.use_by_date = use_by_date;
@@ -8,3 +10,4 @@ class Blood {
     this.volume_ml = volume_ml;
   }
 }
+module.exports=Blood
