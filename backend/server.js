@@ -1,3 +1,5 @@
+
+const query = require("./routes/query")
 /* Load packages */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -35,8 +37,11 @@ router.get(
   }
 );
 
+
+
+
 /* Append /api for HTTP requests */
-app.use('/api', router);
+app.use('/query',query);
 
 /* Launch backend into a port */
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
