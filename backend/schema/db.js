@@ -3,6 +3,7 @@
 const fs = require("fs");
 const l = [
     {
+        "id": 12345,
         "type": "A",
         "arrival_date": "2019_08_12",
         "use_by_date": "2019_09_12",
@@ -11,6 +12,7 @@ const l = [
         "volume_ml": 500 
     },
     {
+        "id": 12344,
         "type": "A",
         "arrival_date": "2019_08_12",
         "use_by_date": "2019_09_12",
@@ -19,6 +21,7 @@ const l = [
         "volume_ml": 500 
     },
     {
+        "id": 12343,
         "type": "A",
         "arrival_date": "2019_08_12",
         "use_by_date": "2019_09_12",
@@ -27,6 +30,7 @@ const l = [
         "volume_ml": 500 
     },
     {
+        "id": 12342,
         "type": "A",
         "arrival_date": "2019_08_12",
         "use_by_date": "2019_09_12",
@@ -35,6 +39,7 @@ const l = [
         "volume_ml": 500 
     },
     {
+        "id": 12341,
         "type": "A",
         "arrival_date": "2019_08_12",
         "use_by_date": "2019_09_12",
@@ -45,6 +50,7 @@ const l = [
 ];
 class Blood{
     constructor(item){
+        this.id=item.id;
         this.type=item.type;
         this.arrival_date=item.arrival_date;
         this.use_by_date=item.use_by_date;
