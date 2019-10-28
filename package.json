@@ -10,7 +10,6 @@
     "postinstall": "cd frontend && yarn install && cd ../backend && yarn install"
   },
   "dependencies": {
-    "concurrently": "^5.0.0",
-    "react-router-dom": "^5.1.2"
+    "concurrently": "^5.0.0"
   }
 }
