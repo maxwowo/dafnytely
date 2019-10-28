@@ -4,50 +4,60 @@ const fs = require("fs");
 const l = [
     {
         "type": "A",
-        "arrival_date": "2019-08-12",
-        "use-by-date": "2019-09-12",
-        "donor-id": "D-12345",
-        "lab-id":   "L-12345",
-        "volume-ml": 500 
+        "arrival_date": "2019_08_12",
+        "use_by_date": "2019_09_12",
+        "donor_id": "D_12345",
+        "lab_id":   "L_12345",
+        "volume_ml": 500 
     },
     {
         "type": "A",
-        "arrival_date": "2019-08-12",
-        "use-by-date": "2019-09-12",
-        "donor-id": "D-12345",
-        "lab-id":   "L-12345",
-        "volume-ml": 500 
+        "arrival_date": "2019_08_12",
+        "use_by_date": "2019_09_12",
+        "donor_id": "D_12345",
+        "lab_id":   "L_12345",
+        "volume_ml": 500 
     },
     {
         "type": "A",
-        "arrival_date": "2019-08-12",
-        "use-by-date": "2019-09-12",
-        "donor-id": "D-12345",
-        "lab-id":   "L-12345",
-        "volume-ml": 500 
+        "arrival_date": "2019_08_12",
+        "use_by_date": "2019_09_12",
+        "donor_id": "D_12345",
+        "lab_id":   "L_12345",
+        "volume_ml": 500 
     },
     {
         "type": "A",
-        "arrival_date": "2019-08-12",
-        "use-by-date": "2019-09-12",
-        "donor-id": "D-12345",
-        "lab-id":   "L-12345",
-        "volume-ml": 500 
+        "arrival_date": "2019_08_12",
+        "use_by_date": "2019_09_12",
+        "donor_id": "D_12345",
+        "lab_id":   "L_12345",
+        "volume_ml": 500 
     },
     {
         "type": "A",
-        "arrival_date": "2019-08-12",
-        "use-by-date": "2019-09-12",
-        "donor-id": "D-12345",
-        "lab-id":   "L-12345",
-        "volume-ml": 500 
+        "arrival_date": "2019_08_12",
+        "use_by_date": "2019_09_12",
+        "donor_id": "D_12345",
+        "lab_id":   "L_12345",
+        "volume_ml": 500 
     }
 ];
+class Blood{
+    constructor(item){
+        this.type=item.type;
+        this.arrival_date=item.arrival_date;
+        this.use_by_date=item.use_by_date;
+        this.donor_id=item. donor_id;
+        this.lab_id=item.lab_id;
+        this.volume_ml=item.volume_ml;
+    }
+}
 class Db{
     constructor(){
         this.bloods=[];
         l.forEach(item=>{
-            this.bloods.push(item);
+            this.bloods.push(new Blood (item));
         })
     }
 }
