@@ -2,10 +2,8 @@ import React from 'react';
 import { Layout, Menu } from 'antd';
 import styles from './Navbar.module.less';
 
-const { Header } = Layout;
-
 const Navbar = () => (
-  <Header className={styles.Navbar}>
+  <Layout.Header className={styles.Navbar}>
     <div className="logo"/>
     <Menu
       theme="dark"
@@ -16,7 +14,7 @@ const Navbar = () => (
       <Menu.Item key="2">nav 2</Menu.Item>
       <Menu.Item key="3">nav 3</Menu.Item>
     </Menu>
-  </Header>
+  </Layout.Header>
 );
 
 export default Navbar;

@@ -3,8 +3,8 @@ import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import { Layout } from 'antd';
 import SidePanel from './SidePanel/SidePanel';
 import BloodList from './BloodList/BloodList';
-import Navbar from '../../components/Navbar/Navbar';
 import styles from './QueryPage.module.less';
+import Navbar from '../../components/Navbar/Navbar';
 
 class QueryPage extends React.Component {
 
@@ -44,6 +44,8 @@ class QueryPage extends React.Component {
   render() {
     return (
       <FullSizeLayout>
+        <Navbar/>
+        <FullSizeLayout>
         <SidePanel
           bloodTypes={this.state.bloodTypes}
           onBloodTypeChange={this.onBloodTypeChange}
@@ -56,6 +58,7 @@ class QueryPage extends React.Component {
             bloodList={this.state.bloodList}
           />
         </Layout.Content>
+        </FullSizeLayout>
       </FullSizeLayout>
     );
   }
