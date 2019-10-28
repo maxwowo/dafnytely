@@ -10,7 +10,7 @@ function LandingPage() {
           Vampire Pty Ltd
         </Typography.Title>
         <Typography.Paragraph>
-          Give us some blood
+          Hippity hoppity we're coming for your blood
         </Typography.Paragraph>
       </div>
     </Center>
