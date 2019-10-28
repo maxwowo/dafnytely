@@ -6,8 +6,6 @@
         "donor-id": "D-12345",
         "lab-id":   "L-12345",
         "volume-ml": 500 
-<<<<<<< HEAD
-=======
     },
     {
         "type": "A",
@@ -40,6 +38,5 @@
         "donor-id": "D-12345",
         "lab-id":   "L-12345",
         "volume-ml": 500 
->>>>>>> test
     }
 ]
