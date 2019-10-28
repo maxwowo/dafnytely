@@ -16,6 +16,7 @@ const SidePanel = (
   >
     <Menu
       theme='light'
+      className={styles.menu}
     >
       <BloodTypeFilter
         bloodTypes={bloodTypes}
