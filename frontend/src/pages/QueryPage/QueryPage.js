@@ -33,7 +33,7 @@ class QueryPage extends React.Component {
       res => {
         console.log(res.json());
       }
-    )
+    );
   }
 
   onBloodTypeChange = (
