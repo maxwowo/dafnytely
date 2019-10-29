@@ -1,56 +1,50 @@
-// Detemrines if a year is in the specified time range,
-// in this case between the year 2000 and 2999
-function method validYear(y: int): bool 
+//-----------------------------------------------------------------------------
+// BLOOD UNIT ID SECTION
+//-----------------------------------------------------------------------------
+
+// Determines if a blood unit id is valid.
+function method validBloodUnitID(id: int): bool
 {
-    2000 <= y < 2999
+    0 <= id < 1000000
 }
 
-// Determines if a month is valid.
-function method validMonth(m: int): bool
+// Determines if a given blood type is valid.
+function method validBloodType(bt: string): bool
 {
-    1 <= m <= 12
+    bt == "O-" || bt == "O+" || bt == "A-" || bt == "A+" || bt == "B-" || bt == "B+" || bt == "AB-" || bt == "AB+"
 }
 
-// Returns true if a given month and day are a valid combination. For 
-// Febuary, a day can range between 1 and 29, for April, 
-// June, September and November a day can range between 1 and 30 and for 
-// all other months a day can range between 1 and 31.
-function method validDay(m: int, d: int): bool
+// Checks that the arrival date is before the use by date.
+function method validDating(arr_d: string, ub_d: string): bool
 {
-    (m in [4,6,9,11] && 1<=d<=30) || (m in [1,3,5,7,8,12] && 1<=d<=31) || (m == 2 && 1<=d<=29)
+    true
+    //arr_d.isBefore(ub_d)
 }
 
-// Returns true if a date is valid as determined by the function methods,
-// validYear, validMonth and validDate
-function method validDate(y: int, m: int, d: int): bool
+// Checks the the donor id is valid.
+function method validDonorID(id: int): bool
 {
-    validYear(y) && validMonth(m) && validDay(m, d)
+    0 <= id < 1000000
 }
 
-// Date Class: the date class holds the year, month and day of a particular date 
-// as integer values. The minimum date is day: 1, month: 1, year: 2000 and the 
-// maximum date is day: 31, month: 12, year: 2999.
-// The class invariant requires every date satisfies the validDate function method. 
-class Date {
-    var year: int;
-    var month: int;
-    var day: int;
-
-    predicate Valid()
-    reads this;
-    {
-        validDate(year, month, day)
-    }
-
-    constructor(y: int, m: int, d: int)
-    modifies this;
-    ensures Valid();
-    requires validDate(y, m, d);
-    {
-        year := y; month := m; day := d;
-    }
+// Checks that the lab id is valid.
+function method validLabID(id: int): bool
+{
+    0 <= id < 1000000
 }
 
+// Checks that the volume is valid.
+function method validVolume(v: int): bool
+{
+    v == 500
+}
+
+// Class for each blood unit. When each new blood unit is entered into the system, 
+// a blood unit id, blood type, arrival date, useby date, donor id, lab id and 
+// volume must be given. The arrival date should be the current date and must be 
+// before the expiry date. The blood type must also be a valid blood type and 
+// all ids must be of the correct form. Note: The validity criterion can be 
+// modified if need be.
 class BloodUnit {
     var id: int;
     var blood_type: string;
@@ -63,21 +57,30 @@ class BloodUnit {
     predicate Valid()
     reads this;
     { 
-
+        validBloodUnitID(id) &&
+        validBloodType(blood_type) &&
+        validDating(arrival_date, use_by_date) &&
+        validDonorID(donor_id) &&
+        validLabID(lab_id) &&
+        validVolume(volume_ml)
     }
 
-    constructor (id_val: int, bt: string, ad: string, ubd: string, did: int, lid: int, v: int)
-    ensures Valid()
-    requires 0 <= id_val < 100000 
-    ensures id==id_val
-    requires bt == "O-" || bt == "O+" || bt == "A-" || bt == "A+" || bt == "B-" || bt == "B+" || bt == "AB-" || bt == "AB+"
-    ensures blood_type==bt
-    requires ad 
-    ensures arrival_date==ad
-    ensures use_by_date==ubd
-    ensures donor_id==did
-    ensures lab_id==lid
-    ensures volume_ml=v
+    constructor (b_id: int, b_type: string, arr_d: string, useby_d: string, d_id: int, l_id: int, vol: int)
+    modifies this;
+    ensures Valid();
+    requires validBloodUnitID(b_id); 
+    requires validBloodType(b_type); 
+    requires validDating(arr_d, useby_d); 
+    requires validDonorID(d_id); 
+    requires validLabID(l_id);
+    requires validVolume(vol);
     {
+        id := b_id;
+        blood_type := b_type;
+        arrival_date := arr_d;
+        use_by_date := useby_d;
+        donor_id := d_id;
+        lab_id := l_id;
+        volume_ml := vol;
     }
 }
