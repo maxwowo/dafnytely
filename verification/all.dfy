@@ -157,3 +157,17 @@ class BloodUnit {
         volume_ml := vol;
     }
 }
+
+//-----------------------------------------------------------------------------
+// MAIN FUNCTION METHOD FOR TESTING
+//-----------------------------------------------------------------------------
+method Main() {
+
+    // Test Date class and is before method
+    var d1: Date := new Date(2016, 2, 1);
+    var d2: Date := new Date(2016, 3, 2);
+    print d1.day; print "-"; print d1.month; print "-"; print d1.year; print "\n";
+    print d2.day; print "-"; print d2.month; print "-"; print d2.year; print "\n";
+    var b: bool := isBeforeFM(d1,d2);
+    print "d1 is before d2: "; print b; print "\n";
+}
