@@ -66,7 +66,25 @@ class QueryPage extends React.Component {
   onMinimumExpiryChange = (
     value
   ) => {
-    this.setState({ expiryDateFilter: value });
+    this.setState({ expiryDateFilter: value, bloodList: [] });
+    Axios.post(
+      '/query',
+      {
+        type: value,
+        sort: false,
+        date: value.format('YYYY-MM-DD'),
+        method: 'get_units_by_type'
+      }
+    ).then(
+      res => {
+        console.log(res);
+        this.setState(
+          {
+            bloodList: [...this.state.bloodList, ...res.data.list]
+          }
+        );
+      }
+    );
   };
 
   onClearButtonClicked = () => {
