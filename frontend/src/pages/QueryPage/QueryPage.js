@@ -66,6 +66,7 @@ class QueryPage extends React.Component {
   onMinimumExpiryChange = (
     value
   ) => {
+    console.log(value.format('YYYY-MM-DD'));
     this.setState({ expiryDateFilter: value, bloodList: [] });
     Axios.post(
       '/query',
@@ -73,7 +74,7 @@ class QueryPage extends React.Component {
         type: value,
         sort: false,
         date: value.format('YYYY-MM-DD'),
-        method: 'get_units_by_type'
+        method: 'get_units_by_type_date'
       }
     ).then(
       res => {
