@@ -25,7 +25,7 @@ const BloodList = (
         Blood List
       </Typography.Title>
     }
-    style={{ backgroundColor: 'white' }}
+    className={styles.list}
     dataSource={bloodList}
     renderItem={item => (
       <List.Item>
