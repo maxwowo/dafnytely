@@ -1,5 +1,5 @@
 import React from 'react';
-import { Descriptions, List, Typography } from 'antd';
+import { Descriptions, List, Typography, Empty } from 'antd';
 import { BLOOD_UNIT_SIZE } from '../../../constants/bloodConstants';
 import styles from './BloodList.module.less';
 
@@ -9,6 +9,15 @@ const BloodList = (
   }
 ) => (
   <List
+    locale={
+      {
+        emptyText: (
+          <Empty
+            description='No blood units match the description :('
+          />
+        )
+      }
+    }
     header={
       <Typography.Title
         className={styles.typographyTitle}

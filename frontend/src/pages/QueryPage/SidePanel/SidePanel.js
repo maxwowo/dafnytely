@@ -7,7 +7,9 @@ const SidePanel = (
   {
     bloodTypes,
     onBloodTypeChange,
-    onMinimumExpiryChange
+    onMinimumExpiryChange,
+    bloodTypeFilter,
+    expiryDateFilter
   }
 ) => (
   <Layout.Sider
@@ -21,10 +23,12 @@ const SidePanel = (
       <BloodTypeFilter
         bloodTypes={bloodTypes}
         onBloodTypeChange={onBloodTypeChange}
+        bloodTypeFilter={bloodTypeFilter}
       />
 
       <DatePicker
         onChange={onMinimumExpiryChange}
+        value={expiryDateFilter}
         mode='date'
         placeholder='Filter by minimum expiry date'
         showToday={false}

@@ -11,11 +11,12 @@ const bloodTypes = ['O', 'A', 'B', 'AB'];
 class QueryPage extends React.Component {
 
   state = {
-    bloodList: []
+    bloodList: [],
+    bloodTypeFilter: null,
+    expiryDateFilter: null
   };
 
   componentDidMount() {
-
     for (let bloodType of bloodTypes) {
       Axios.post(
         '/query',
@@ -26,12 +27,11 @@ class QueryPage extends React.Component {
         }
       ).then(
         res => {
-          console.log(res.data);
           this.setState(
             {
               bloodList: [...this.state.bloodList, ...res.data.list]
             }
-          )
+          );
         }
       );
     }
@@ -40,13 +40,33 @@ class QueryPage extends React.Component {
   onBloodTypeChange = (
     value
   ) => {
-    console.log(value);
+    this.setState({ bloodTypeFilter: value, bloodList: [] });
+
+    if (!this.state.expiryDateFilter) {
+      Axios.post(
+        '/query',
+        {
+          type: value,
+          sort: false,
+          method: 'get_units_by_type'
+        }
+      ).then(
+        res => {
+          this.setState(
+            {
+              bloodList: [...this.state.bloodList, ...res.data.list]
+            }
+          );
+        }
+      );
+    }
   };
 
   onMinimumExpiryChange = (
     value
   ) => {
-    console.log(value);
+    this.setState({ expiryDateFilter: value });
+    console.log(this.state.expiryDateFilter);
   };
 
   render() {
@@ -56,6 +76,8 @@ class QueryPage extends React.Component {
           bloodTypes={bloodTypes}
           onBloodTypeChange={this.onBloodTypeChange}
           onMinimumExpiryChange={this.onMinimumExpiryChange}
+          bloodTypeFilter={this.state.bloodTypeFilter}
+          expiryDateFilter={this.state.expiryDateFilter}
         />
         <Layout.Content
           className={styles.content}
