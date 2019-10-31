@@ -7,7 +7,7 @@ class Query {
     let i = 0;
     let bloodlist = [];
     while (i < bloodDb.db.bloods.length) {
-      if (bloodDb.db.bloods[i].type === body.type) {
+      if (bloodDb.db.bloods[i].type == body.type) {
         bloodlist.push(bloodDb.db.bloods[i]);
       }
       i++;
@@ -21,13 +21,33 @@ class Query {
     let bloodlist = [];
     while (i < bloodDb.db.bloods.length) {
       let current_date = new Date(bloodDb.db.bloods[i]['use_by_date']);
-      if (bloodDb.db.bloods[i].type === body.type && current_date >= target_date) {
+      if (bloodDb.db.bloods[i].type == body.type && current_date >= target_date) {
         bloodlist.push(bloodDb.db.bloods[i]);
       }
       i++;
     }
     return { list: bloodlist };
   }
+  static async get_units_by_date(body) {
+    
+    let target_date = new Date(body.date);
+    let i = 0;
+    let bloodlist = [];
+    while (i < bloodDb.db.bloods.length) {
+      let current_date = new Date(bloodDb.db.bloods[i]['use_by_date']);
+      if ( current_date >= target_date) {
+        bloodlist.push(bloodDb.db.bloods[i]);
+      }
+      i++;
+    }
+    return { list: bloodlist };
+  }
+  static async get_all_units(body) {
+    
+    return { list: bloodDb.db.bloods };
+  }
+  
+
 }
 
 module.exports = Query;
