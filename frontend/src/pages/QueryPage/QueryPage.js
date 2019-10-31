@@ -6,34 +6,35 @@ import SidePanel from './SidePanel/SidePanel';
 import BloodList from './BloodList/BloodList';
 import styles from './QueryPage.module.less';
 
+const bloodTypes = ['O', 'A', 'B', 'AB'];
+
 class QueryPage extends React.Component {
 
   state = {
-    bloodTypes: [],
     bloodList: []
   };
 
   componentDidMount() {
-    this.setState({
-      bloodTypes: ['O', 'A', 'B', 'AB'],
-      bloodList: [
+
+    for (let bloodType of bloodTypes) {
+      Axios.post(
+        '/query',
         {
-          'type': 'A',
-          'arrival_date': '2019-08-12',
-          'use-by-date': '2019-09-12',
-          'donor-id': 'D-12345',
-          'lab-id': 'L-12345',
-          'volume-ml': 500
+          type: bloodType,
+          sort: false,
+          method: 'get_units_by_type'
         }
-      ]
-    });
-    Axios.post(
-      '/api/query'
-    ).then(
-      res => {
-        console.log(res.json());
-      }
-    );
+      ).then(
+        res => {
+          console.log(res.data);
+          this.setState(
+            {
+              bloodList: [...this.state.bloodList, ...res.data.list]
+            }
+          )
+        }
+      );
+    }
   }
 
   onBloodTypeChange = (
@@ -52,7 +53,7 @@ class QueryPage extends React.Component {
     return (
       <FullSizeLayout>
         <SidePanel
-          bloodTypes={this.state.bloodTypes}
+          bloodTypes={bloodTypes}
           onBloodTypeChange={this.onBloodTypeChange}
           onMinimumExpiryChange={this.onMinimumExpiryChange}
         />

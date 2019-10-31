@@ -26,15 +26,9 @@ app.use(
   logger('dev')
 );
 /* Root route */
-router.get(
-  '/',
-  (
-    req,
-    res
-  ) => {
-    res.send('hello');
-  }
-);
+router.get('/', (req, res) => {
+  res.send('hello');
+});
 
 /* Append /api for HTTP requests */
 app.use('/query', query);
