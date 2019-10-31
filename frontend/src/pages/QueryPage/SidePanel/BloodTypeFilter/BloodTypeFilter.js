@@ -5,11 +5,13 @@ import styles from './BloodTypeFilter.module.less';
 const BloodTypeFilter = (
   {
     bloodTypes,
-    onBloodTypeChange
+    onBloodTypeChange,
+    bloodTypeFilter
   }
 ) => (
   <Select
     placeholder="Filter by blood type"
+    value={bloodTypeFilter}
     optionFilterProp="children"
     className={styles.select}
     onChange={onBloodTypeChange}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker, Layout, Menu } from 'antd';
+import { DatePicker, Layout, Menu, Button } from 'antd';
 import BloodTypeFilter from './BloodTypeFilter/BloodTypeFilter';
 import styles from './SidePanel.module.less';
 
@@ -9,7 +9,8 @@ const SidePanel = (
     onBloodTypeChange,
     onMinimumExpiryChange,
     bloodTypeFilter,
-    expiryDateFilter
+    expiryDateFilter,
+    onClearButtonClicked
   }
 ) => (
   <Layout.Sider
@@ -36,6 +37,13 @@ const SidePanel = (
       />
 
     </Menu>
+
+    <Button
+      onClick={onClearButtonClicked}
+      className={styles.clearButton}
+    >
+      Clear
+    </Button>
   </Layout.Sider>
 );
 
