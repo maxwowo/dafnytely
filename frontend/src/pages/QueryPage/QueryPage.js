@@ -22,9 +22,7 @@ class QueryPage extends React.Component {
       Axios.post(
         '/query',
         {
-          type: bloodType,
-          sort: false,
-          method: 'get_units_by_type'
+          method: 'get_all_units'
         }
       ).then(
         res => {
@@ -43,38 +41,36 @@ class QueryPage extends React.Component {
   ) => {
     this.setState({ bloodTypeFilter: value, bloodList: [] });
 
-    if (!this.state.expiryDateFilter) {
-      Axios.post(
-        '/query',
-        {
-          type: value,
-          sort: false,
-          method: 'get_units_by_type'
-        }
-      ).then(
-        res => {
-          this.setState(
-            {
-              bloodList: [...this.state.bloodList, ...res.data.list]
-            }
-          );
-        }
-      );
-    }
-  };
-
-  onMinimumExpiryChange = (
-    value
-  ) => {
-    console.log(value.format('YYYY-MM-DD'));
-    this.setState({ expiryDateFilter: value, bloodList: [] });
     Axios.post(
       '/query',
       {
         type: value,
         sort: false,
+        date: this.state.expiryDateFilter ? this.state.expiryDateFilter.format('YYYY-MM-DD') : null,
+        method: !this.state.expiryDateFilter ? 'get_units_by_type' : 'get_units_by_type_date'
+      }
+    ).then(
+      res => {
+        this.setState(
+          {
+            bloodList: [...this.state.bloodList, ...res.data.list]
+          }
+        );
+      }
+    );
+  };
+
+  onMinimumExpiryChange = (
+    value
+  ) => {
+    this.setState({ expiryDateFilter: value, bloodList: [] });
+    Axios.post(
+      '/query',
+      {
+        type: this.state.bloodTypeFilter,
+        sort: false,
         date: value.format('YYYY-MM-DD'),
-        method: 'get_units_by_type_date'
+        method: !this.state.bloodTypeFilter ? 'get_units_by_date' : 'get_units_by_type_date'
       }
     ).then(
       res => {
