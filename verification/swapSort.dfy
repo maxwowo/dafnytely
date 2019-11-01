@@ -1,15 +1,17 @@
 //-----------------------------------------------------------------------------
-// INTEGER SWAP SORT ALGORITHM
+// INTEGER INSERT SORT ALGORITHM
 //-----------------------------------------------------------------------------
 
 predicate Sorted(a: array<int>, lo: int, hi: int)
+requires a != null;
 reads a;
 {
-    forall j,k :: lo<=j<k<hi ==> a[j]<=a[k]
+    forall j,k :: 0<=lo<=j<k<hi<a.Length ==> a[j]<=a[k]
 }
 
 method InsertionSortSwap(a: array<int>)
-requires a.Length>1
+requires a != null;
+requires a.Length>1;
 ensures Sorted(a, 0, a.Length);
 ensures multiset(a[..]) == multiset(old(a[..]));
 modifies a
@@ -31,4 +33,17 @@ modifies a
         }
         up := up+1;
     }
+}
+
+//-----------------------------------------------------------------------------
+// MAIN METHOD TESTING
+//-----------------------------------------------------------------------------
+
+method Main() {
+    var a: array<int> := new int[6];
+    a[0], a[1], a[2], a[3], a[4], a[5] := 4,5,9,1,86,34;
+    print a[..], "\n";
+    InsertionSortSwap(a);
+    print a[..], "\n";
+    assert Sorted(a, 0, a.Length);
 }
