@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import QueryPage from './pages/QueryPage/QueryPage';
 import DonatePage from './pages/DonatePage/DonatePage';
 import RequestPage from './pages/RequestPage/RequestPage';
+import AdminPage from './pages/AdminPage/AdminPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 const Router = () => (
@@ -30,6 +31,10 @@ const Router = () => (
           <Route
             path='/request'
             component={RequestPage}
+          />
+          <Route
+            path='/admin'
+            component={AdminPage}
           />
           <Route
             component={NotFoundPage}
