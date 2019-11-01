@@ -5,6 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import QueryPage from './pages/QueryPage/QueryPage';
 import DonatePage from './pages/DonatePage/DonatePage';
+import RequestPage from './pages/RequestPage/RequestPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 const Router = () => (
@@ -25,6 +26,10 @@ const Router = () => (
           <Route
             path='/donate'
             component={DonatePage}
+          />
+          <Route
+            path='/request'
+            component={RequestPage}
           />
           <Route
             component={NotFoundPage}

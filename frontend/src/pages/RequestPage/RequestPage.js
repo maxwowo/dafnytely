@@ -3,10 +3,10 @@ import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import Center from '../../components/Center/Center';
 import { bloodTypes } from '../../constants/bloodConstants';
 import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, Row, Select, Typography } from 'antd';
-import styles from './DonatePage.module.less';
+import styles from './RequestPage.module.less';
 
 
-class DonatePage extends React.Component {
+class RequestPage extends React.Component {
 
   render() {
     return (
@@ -14,7 +14,7 @@ class DonatePage extends React.Component {
         <Layout.Content>
           <Center>
             <Card
-              title='Make a donation'
+              title='Make a request'
               className={styles.card}
             >
               <Row>
@@ -78,42 +78,7 @@ class DonatePage extends React.Component {
                 <Col
                   span={8}
                 >
-                  Lab ID
-                </Col>
-                <Col
-                  span={16}
-                >
-                  <Input
-                    placeholder='Enter lab ID'
-                    className={styles.select}
-                  />
-                </Col>
-              </Row>
-
-              <Row
-                className={styles.row}
-              >
-                <Col
-                  span={8}
-                >
-                  Donor ID
-                </Col>
-                <Col
-                  span={16}
-                >
-                  <Input
-                    placeholder='Enter donor ID'
-                  />
-                </Col>
-              </Row>
-
-              <Row
-                className={styles.row}
-              >
-                <Col
-                  span={8}
-                >
-                  Expiry date
+                  Minimum expiry date
                 </Col>
                 <Col
                   span={16}
@@ -141,8 +106,8 @@ class DonatePage extends React.Component {
           </Center>
         </Layout.Content>
       </FullSizeLayout>
-    );
+    )
   }
 }
 
-export default DonatePage;
+export default RequestPage;
