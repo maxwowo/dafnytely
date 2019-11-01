@@ -4,6 +4,7 @@ import FullSizeLayout from './components/FullSizeLayout/FullSizeLayout';
 import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import QueryPage from './pages/QueryPage/QueryPage';
+import DonatePage from './pages/DonatePage/DonatePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 const Router = () => (
@@ -20,6 +21,10 @@ const Router = () => (
           <Route
             path='/query'
             component={QueryPage}
+          />
+          <Route
+            path='/donate'
+            component={DonatePage}
           />
           <Route
             component={NotFoundPage}

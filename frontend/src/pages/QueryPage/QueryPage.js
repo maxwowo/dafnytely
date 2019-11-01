@@ -4,9 +4,8 @@ import { Layout } from 'antd';
 import Axios from 'axios';
 import SidePanel from './SidePanel/SidePanel';
 import BloodList from './BloodList/BloodList';
+import { bloodTypes } from '../../constants/bloodConstants';
 import styles from './QueryPage.module.less';
-
-const bloodTypes = ['O', 'A', 'B', 'AB'];
 
 class QueryPage extends React.Component {
 
