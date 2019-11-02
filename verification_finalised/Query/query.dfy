@@ -104,3 +104,62 @@ ensures forall k:: k in results.values==> k>=target;
       i:=i+1;
    }
 }
+
+method get_units_by_date(dates : Dynamic_array,target:int) returns (results: Dynamic_array)
+requires dates!=null
+ensures results!=null
+ensures (forall k:: 0<=k< |dates.values|==> (dates.values[k]>=target==>dates.values[k] in results.values))
+ensures forall k:: k in results.values==> k>=target;
+{
+   var i:=0;
+   results:= new Dynamic_array();
+   assert(results!=null);
+   assert(|results.values|==0);
+   assert(results.values==[]);
+   assert(forall k:: 0<=k<|results.values|==>results.values[k]>=target);
+   assert(forall k:: 0<=k<i ==> (dates.values[k]<target==>!(dates.values[k] in results.values)));
+   while (i< |dates.values|)
+   invariant i<=|dates.values|;
+   invariant (results!=null);
+   invariant forall k:: k in results.values==> k>=target ;
+   invariant forall k:: 0<=k<i ==> (dates.values[k]>=target==>dates.values[k] in results.values);
+   {
+  
+      if(dates.values[i]>=target)
+      {
+         assert(dates.values[i]>=target);
+         results.Add(|results.values|,dates.values[i]);
+         assert(dates.values[i] in results.values);
+      }
+      assert(dates.values[i]>= target ==>dates.values[i] in results.values);
+      i:=i+1;
+   }
+}
+
+method get_units_by_type(types : array<int>,target:int,results: array<bool>)
+requires types!=null && results != null;
+requires types.Length  == results.Length;
+ensures forall k:: 0<=k<results.Length ==> (results[k]==true ==> types[k]==target);
+modifies results;
+{
+   
+   
+   var i :=0;
+   assert(forall k:: 0<=k<i ==> (results[k]==true ==> types[k]==target));
+   while(i<types.Length)
+   invariant types.Length  == results.Length;
+   invariant 0<=i<=types.Length;
+   invariant 0<=i<=results.Length;
+   invariant (forall k:: 0<=k<i ==> (results[k]==true ==> types[k]==target));
+   {
+      if(types[i]==target){
+         results[i]:=true;
+      }else{
+         results[i]:=false;
+      }
+      assert(types[i]==target ==>results[i]==true);
+      assert(types[i]!=target ==>results[i]==false);
+      i:=i+1;
+   }
+
+}

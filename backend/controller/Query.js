@@ -5,14 +5,21 @@ class Query {
   static async get_units_by_type(body) {
 
     let i = 0;
-    let bloodlist = [];
+    let results = new Array(bloodDb.db.bloods.length).fill(false);
     while (i < bloodDb.db.bloods.length) {
       if (bloodDb.db.bloods[i].type == body.type) {
+        results[i]=true;
+      }
+    }
+
+    let bloodlist=[];
+    results.forEach((item,i)=>{
+      if(item==true){
         bloodlist.push(bloodDb.db.bloods[i]);
       }
-      i++;
-    }
-    return { list: bloodlist };
+    })
+
+    return { list: bloodlist};
   }
 
   static async get_units_by_type_date(body) {
