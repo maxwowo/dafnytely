@@ -18,13 +18,7 @@ const BloodList = (
         )
       }
     }
-    header={
-      <Typography.Title
-        className={styles.typographyTitle}
-      >
-        Blood List
-      </Typography.Title>
-    }
+    header='Blood list'
     className={styles.list}
     dataSource={bloodList}
     renderItem={item => (

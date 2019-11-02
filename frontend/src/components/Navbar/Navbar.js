@@ -14,6 +14,10 @@ const links = [
     link: '/donate'
   },
   {
+    name: 'Request',
+    link: '/request'
+  },
+  {
     name: 'Admin',
     link: '/admin'
   }

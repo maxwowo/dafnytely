@@ -5,7 +5,7 @@ import Center from '../../components/Center/Center';
 const NotFoundPage = () => (
   <Center>
     <Typography.Title>
-      Bruh you lost?
+      wrong url m8
     </Typography.Title>
   </Center>
 );
