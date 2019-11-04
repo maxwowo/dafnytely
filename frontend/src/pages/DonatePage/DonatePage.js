@@ -28,7 +28,7 @@ class DonatePage extends React.Component {
           {
             type: this.state.bloodType,
             arrival_date: today,
-            use_by_date: this.state.expiryDate,
+            use_by_date: this.state.expiryDate.format('YYYY-MM-DD'),
             donor_id: this.state.donorId,
             lab_id: this.state.labId
           }
