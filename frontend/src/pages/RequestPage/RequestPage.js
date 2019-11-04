@@ -1,12 +1,35 @@
 import React from 'react';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import Center from '../../components/Center/Center';
+import Axios from 'axios';
 import { bloodTypes } from '../../constants/bloodConstants';
 import { Button, Card, Col, DatePicker, InputNumber, Layout, Row, Select, Typography } from 'antd';
 import styles from './RequestPage.module.less';
 
 
 class RequestPage extends React.Component {
+
+  state = {
+    bloodType: undefined,
+    numBloodUnits: undefined,
+    expiryDate: undefined
+  };
+
+  checkCanSubmit = () => {
+    return this.state.bloodType !== undefined && this.state.numBloodUnits !== undefined;
+  };
+
+  handleSubmit = () => {
+    Axios.post(
+      '/order',
+      {
+        type: this.state.bloodType,
+        units: this.state.numBloodUnits,
+        date: !this.state.expiryDate ? null : this.state.expiryDate.format('YYYY-MM-DD'),
+        method: !this.state.expiryDate ? 'order_type_units' : 'order_type_date_units'
+      }
+    ).then(res => console.log(res));
+  };
 
   render() {
     return (
@@ -31,6 +54,8 @@ class RequestPage extends React.Component {
                   <Select
                     placeholder='Select a blood type'
                     optionFilterProp="children"
+                    value={this.state.bloodType}
+                    onChange={e => this.setState({ bloodType: e })}
                     className={styles.select}
                     filterOption={(input, option) =>
                       option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -66,6 +91,8 @@ class RequestPage extends React.Component {
                 >
                   <InputNumber
                     min={0}
+                    value={this.state.numBloodUnits}
+                    onChange={e => this.setState({ numBloodUnits: e })}
                     placeholder='Enter number of blood units'
                     className={styles.select}
                   />
@@ -84,9 +111,11 @@ class RequestPage extends React.Component {
                   span={16}
                 >
                   <DatePicker
-                    onChange={() => {
+                    onChange={e => {
+                      this.setState({ expiryDate: e });
                     }}
                     mode='date'
+                    value={this.state.expiryDate}
                     placeholder='Select minimum expiry date'
                     showToday={false}
                     className={styles.datePicker}
@@ -98,6 +127,8 @@ class RequestPage extends React.Component {
                 className={styles.row}
               >
                 <Button
+                  onClick={this.handleSubmit}
+                  disabled={!this.checkCanSubmit()}
                   className={styles.submitButton}
                 >
                   Submit
