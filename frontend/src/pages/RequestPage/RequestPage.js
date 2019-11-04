@@ -3,7 +3,7 @@ import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import Center from '../../components/Center/Center';
 import Axios from 'axios';
 import { bloodTypes } from '../../constants/bloodConstants';
-import { Button, Card, Col, DatePicker, InputNumber, Layout, Row, Select, Typography } from 'antd';
+import { Button, Card, Col, DatePicker, InputNumber, Layout, notification, Row, Select, Typography } from 'antd';
 import styles from './RequestPage.module.less';
 
 
@@ -28,7 +28,25 @@ class RequestPage extends React.Component {
         date: !this.state.expiryDate ? null : this.state.expiryDate.format('YYYY-MM-DD'),
         method: !this.state.expiryDate ? 'order_type_units' : 'order_type_date_units'
       }
-    ).then(res => console.log(res));
+    ).then(res => {
+      const status = res.data.status;
+      console.log(status);
+      if (status === 'not enought blood') {
+        notification['error'](
+          {
+            message: 'Request failed',
+            description: 'We don\'t have enough blood to fulfill the request'
+          }
+        );
+      } else {
+        notification['success'](
+          {
+            message: 'Request succeeded',
+            description: 'An order has been placed'
+          }
+        );
+      }
+    });
   };
 
   render() {
