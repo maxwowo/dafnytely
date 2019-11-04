@@ -12,7 +12,7 @@ class Add {
       }
     });
     if (r.status != true) return r;
-    body.bloods.forEach(element => bloodDb.add_blood(new Blood(bloodDb.blood_id, body.type, body.arrival_date, body.use_by_date, body.donor_id, body.lab_id)));
+    body.bloods.forEach(element => bloodDb.add_blood(new Blood(bloodDb.blood_id, element.type, element.arrival_date, element.use_by_date, element.donor_id, element.lab_id)));
     return r;
   }
 
