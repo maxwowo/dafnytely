@@ -1,4 +1,3 @@
-
 const Blood = require('../schema/Blood');
 const l = [
   {
@@ -48,38 +47,42 @@ class Db {
   constructor() {
     this.bloods = [];
     this.orders = [];
-    this.order_id=0;
-    this.blood_id=0;
-    
+    this.order_id = 0;
+    this.blood_id = 0;
+
     l.forEach(item => {
       this.blood_id++;
-      this.bloods.push(new Blood(item.id,item.type,item.arrival_date,item.use_by_date,item.donor_id,item.lab_id));
+      this.bloods.push(new Blood(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
     });
   }
-  add_order(order){
+
+  add_order(order) {
     this.order_id++;
     this.orders.push(order);
 
   }
-  delete_order(key){
-    this.orders.splice(key,1);
+
+  delete_order(key) {
+    this.orders.splice(key, 1);
   }
-  add_blood(blood){
+
+  add_blood(blood) {
     this.blood_id++;
     this.bloods.push(blood);
 
   }
-  delete_blood(key){
-    this.bloods.splice(key,1);
+
+  delete_blood(key) {
+    this.bloods.splice(key, 1);
   }
 }
 
-const blood_expire=(date1,date2=new Date())=>{
-  return date1<date2;
-}
+const blood_expire = (date1, date2 = new Date()) => {
+  return date1 < date2;
+};
 
 const database = new Db();
 module.exports = {
   db: database,
-  blood_expire:blood_expire
+  blood_expire: blood_expire
 };

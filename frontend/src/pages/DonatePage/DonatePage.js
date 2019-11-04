@@ -4,7 +4,7 @@ import Center from '../../components/Center/Center';
 import Axios from 'axios';
 import Moment from 'moment';
 import { bloodTypes } from '../../constants/bloodConstants';
-import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, Row, Select, Typography } from 'antd';
+import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, notification, Row, Select, Typography } from 'antd';
 import styles from './DonatePage.module.less';
 
 
@@ -28,14 +28,24 @@ class DonatePage extends React.Component {
           {
             type: this.state.bloodType,
             arrival_date: today,
-            use_by_date: this.state.expiryDate,
+            use_by_date: this.state.expiryDate.format('YYYY-MM-DD'),
             donor_id: this.state.donorId,
             lab_id: this.state.labId
           }
         ]
       }
     ).then(res => {
-      console.log(res);
+      if (res.data.status === true) {
+        for (let key in this.state) {
+          this.setState({ [key]: undefined });
+        }
+      }
+      notification['success'](
+        {
+          message: 'Donation submitted',
+          description: 'Your donation has been successfully recorded'
+        }
+      );
     });
   };
 
