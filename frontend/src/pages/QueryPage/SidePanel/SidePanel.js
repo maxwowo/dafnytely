@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker, Layout, Menu, Button } from 'antd';
+import { Button, DatePicker, Layout, Menu } from 'antd';
 import BloodTypeFilter from './BloodTypeFilter/BloodTypeFilter';
 import styles from './SidePanel.module.less';
 

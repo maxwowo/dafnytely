@@ -1,5 +1,5 @@
 import React from 'react';
-import { Descriptions, List, Typography, Empty } from 'antd';
+import { Descriptions, Empty, List } from 'antd';
 import { BLOOD_UNIT_SIZE } from '../../../constants/bloodConstants';
 import styles from './BloodList.module.less';
 

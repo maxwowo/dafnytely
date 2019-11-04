@@ -21,7 +21,7 @@ class Query {
     });
 
     return { list: bloodlist };
-}
+  }
 
   static async get_units_by_type_date(body) {
     let target_date = new Date(body.date);

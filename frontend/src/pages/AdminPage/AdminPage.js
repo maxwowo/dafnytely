@@ -142,9 +142,12 @@ class AdminPage extends React.Component {
                           <Descriptions
                             className={styles.descriptions}
                           >
-                            <Descriptions.Item label='Description'>{item.alertType === alertEnum.OUT_OF_STOCK ? `${item.type} is out of stock` : item.alertType === alertEnum.PREDICTED_BELOW ? `${item.type} is predicted to fall below the threshold in the next 5 days` : `${item.type} is below the threshold`}</Descriptions.Item>
+                            <Descriptions.Item
+                              label='Description'>{item.alertType === alertEnum.OUT_OF_STOCK ? `${item.type} is out of stock` : item.alertType === alertEnum.PREDICTED_BELOW ? `${item.type} is predicted to fall below the threshold in the next 5 days` : `${item.type} is below the threshold`}</Descriptions.Item>
                             <Descriptions.Item label='Priority'>
-                              {item.alertType === alertEnum.OUT_OF_STOCK ? <Tag color='red'>High</Tag> : item.alertType === alertEnum.PREDICTED_BELOW ? <Tag color='gold'>Medium</Tag> : <Tag color='green'>Low</Tag>}
+                              {item.alertType === alertEnum.OUT_OF_STOCK ?
+                                <Tag color='red'>High</Tag> : item.alertType === alertEnum.PREDICTED_BELOW ?
+                                  <Tag color='gold'>Medium</Tag> : <Tag color='green'>Low</Tag>}
                             </Descriptions.Item>
                           </Descriptions>
                         </List.Item>

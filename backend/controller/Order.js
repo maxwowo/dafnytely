@@ -1,64 +1,64 @@
-
 const schema = require('../model/db');
 const OrderItem = require('../schema/Order');
-const sort=(a,b)=>{
-    let adate = new Date(a.use_by_date)
-    let bdate= new Date ( b.use_by_date)
-    if(adate>bdate)return 1;
-    else return -1;
-}
+const sort = (a, b) => {
+  let adate = new Date(a.use_by_date);
+  let bdate = new Date(b.use_by_date);
+  if (adate > bdate) return 1;
+  else return -1;
+};
+
 class Order {
 
-    static async order_type_units(body){
-        let blist = schema.db.bloods.sort(sort);
-        let r =[];
-        let remove = [];
-        let current_units=0;
-        let i =0;
-        blist.forEach(blood=>{
-            if(blood.type==body.type&&current_units<body.units&&new Date(blood.use_by_date)>new Date()){
-                r.push(blood);
-                remove.push(i);
-                current_units++;
-            }
-            
-            i++;
-        })
+  static async order_type_units(body) {
+    let blist = schema.db.bloods.sort(sort);
+    let r = [];
+    let remove = [];
+    let current_units = 0;
+    let i = 0;
+    blist.forEach(blood => {
+      if (blood.type == body.type && current_units < body.units && new Date(blood.use_by_date) > new Date()) {
+        r.push(blood);
+        remove.push(i);
+        current_units++;
+      }
 
-        if(current_units!=body.units){
-            return {status:"not enought blood"};
-        }
-        
-        remove.forEach(i=>schema.db.delete_blood(i));
-        schema.db.add_order(new OrderItem(body.type,body.units,null,schema.db.order_id));
-        return {list:r};
+      i++;
+    });
 
-
-
+    if (current_units != body.units) {
+      return { status: 'not enought blood' };
     }
-    static async order_type_date_units(body){
-        let blist = schema.db.bloods.sort(sort);
-        let r =[];
-        let remove = [];
-        let current_units=0;
-        let i =0;
-        blist.forEach(blood=>{
-            if(blood.type==body.type&&current_units<body.units&&new Date(blood.use_by_date)>new Date(body.date)){
-                r.push(blood);
-                remove.push(i);
-                current_units++;
-            }
-            
-            i++;
-        })
 
-        if(current_units!=body.units){
-            return {status:"not enought blood"};
-        }
-        schema.db.add_order(new OrderItem(body.type,body.units,body.date,schema.db.order_id));
-        remove.forEach(i=>schema.db.delete_blood(i));
-        return {list:r};
+    remove.forEach(i => schema.db.delete_blood(i));
+    schema.db.add_order(new OrderItem(body.type, body.units, null, schema.db.order_id));
+    return { list: r };
+
+
+  }
+
+  static async order_type_date_units(body) {
+    let blist = schema.db.bloods.sort(sort);
+    let r = [];
+    let remove = [];
+    let current_units = 0;
+    let i = 0;
+    blist.forEach(blood => {
+      if (blood.type == body.type && current_units < body.units && new Date(blood.use_by_date) > new Date(body.date)) {
+        r.push(blood);
+        remove.push(i);
+        current_units++;
+      }
+
+      i++;
+    });
+
+    if (current_units != body.units) {
+      return { status: 'not enought blood' };
     }
+    schema.db.add_order(new OrderItem(body.type, body.units, body.date, schema.db.order_id));
+    remove.forEach(i => schema.db.delete_blood(i));
+    return { list: r };
+  }
 
 }
 

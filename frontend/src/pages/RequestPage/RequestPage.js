@@ -2,7 +2,7 @@ import React from 'react';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import Center from '../../components/Center/Center';
 import { bloodTypes } from '../../constants/bloodConstants';
-import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, Row, Select, Typography } from 'antd';
+import { Button, Card, Col, DatePicker, InputNumber, Layout, Row, Select, Typography } from 'antd';
 import styles from './RequestPage.module.less';
 
 
@@ -84,7 +84,8 @@ class RequestPage extends React.Component {
                   span={16}
                 >
                   <DatePicker
-                    onChange={() => {}}
+                    onChange={() => {
+                    }}
                     mode='date'
                     placeholder='Select minimum expiry date'
                     showToday={false}
@@ -106,7 +107,7 @@ class RequestPage extends React.Component {
           </Center>
         </Layout.Content>
       </FullSizeLayout>
-    )
+    );
   }
 }
 

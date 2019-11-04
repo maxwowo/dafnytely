@@ -4,7 +4,7 @@ import Center from '../../components/Center/Center';
 import Axios from 'axios';
 import Moment from 'moment';
 import { bloodTypes } from '../../constants/bloodConstants';
-import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, Row, Select, Typography, notification } from 'antd';
+import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, notification, Row, Select, Typography } from 'antd';
 import styles from './DonatePage.module.less';
 
 
@@ -45,7 +45,7 @@ class DonatePage extends React.Component {
           message: 'Donation submitted',
           description: 'Your donation has been successfully recorded'
         }
-      )
+      );
     });
   };
 
