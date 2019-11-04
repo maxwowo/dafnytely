@@ -28,8 +28,10 @@ class Order {
         if(current_units!=body.units){
             return {status:"not enought blood"};
         }
-        
-        remove.forEach(i=>schema.db.delete_blood(i));
+        while(remove.length>0){
+            let a = remove.pop()
+            schema.db.delete_blood(a);
+        }
         schema.db.add_order(new OrderItem(body.type,body.units,null,schema.db.order_id));
         return {list:r};
 
@@ -56,7 +58,10 @@ class Order {
             return {status:"not enought blood"};
         }
         schema.db.add_order(new OrderItem(body.type,body.units,body.date,schema.db.order_id));
-        remove.forEach(i=>schema.db.delete_blood(i));
+        while(remove.length>0){
+            let a = remove.pop()
+            schema.db.delete_blood(a);
+        }
         return {list:r};
     }
 
