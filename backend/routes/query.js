@@ -6,7 +6,6 @@ router.post('/', (req, res) => {
   if (typeof Query[req.body.method] === 'function') {
     //valid method
     Query[req.body.method](req.body).then(results => {
-      console.log(results);
       res.send(results);
     });
 

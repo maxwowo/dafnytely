@@ -1,12 +1,52 @@
 import React from 'react';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import Center from '../../components/Center/Center';
+import Axios from 'axios';
+import Moment from 'moment';
 import { bloodTypes } from '../../constants/bloodConstants';
 import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, Row, Select, Typography } from 'antd';
 import styles from './DonatePage.module.less';
 
 
 class DonatePage extends React.Component {
+
+  state = {
+    bloodType: undefined,
+    numBloodUnits: undefined,
+    labId: undefined,
+    donorId: undefined,
+    expiryDate: undefined
+  };
+
+  submitForm = () => {
+    const today = Moment(new Date()).format('YYYY-MM-DD');
+    Axios.post(
+      '/add',
+      {
+        method: 'add_blood',
+        bloods: [
+          {
+            type: this.state.bloodType,
+            arrival_date: today,
+            use_by_date: this.state.expiryDate,
+            donor_id: this.state.donorId,
+            lab_id: this.state.labId
+          }
+        ]
+      }
+    ).then(res => {
+      console.log(res);
+    });
+  };
+
+  checkCanSubmit = () => {
+    for (let key in this.state) {
+      if (!this.state[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   render() {
     return (
@@ -31,6 +71,8 @@ class DonatePage extends React.Component {
                   <Select
                     placeholder='Select a blood type'
                     optionFilterProp="children"
+                    value={this.state.bloodType}
+                    onChange={e => this.setState({ bloodType: e })}
                     className={styles.select}
                     filterOption={(input, option) =>
                       option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -66,6 +108,10 @@ class DonatePage extends React.Component {
                 >
                   <InputNumber
                     min={0}
+                    value={this.state.numBloodUnits}
+                    onChange={e => {
+                      this.setState({ numBloodUnits: e });
+                    }}
                     placeholder='Enter number of blood units'
                     className={styles.select}
                   />
@@ -85,6 +131,8 @@ class DonatePage extends React.Component {
                 >
                   <Input
                     placeholder='Enter lab ID'
+                    value={this.state.labId}
+                    onChange={e => this.setState({ labId: e.target.value })}
                     className={styles.select}
                   />
                 </Col>
@@ -103,6 +151,8 @@ class DonatePage extends React.Component {
                 >
                   <Input
                     placeholder='Enter donor ID'
+                    value={this.state.donorId}
+                    onChange={e => this.setState({ donorId: e.target.value })}
                   />
                 </Col>
               </Row>
@@ -119,10 +169,13 @@ class DonatePage extends React.Component {
                   span={16}
                 >
                   <DatePicker
-                    onChange={() => {}}
+                    onChange={(e) => {
+                      this.setState({ expiryDate: e });
+                    }}
                     mode='date'
                     placeholder='Select minimum expiry date'
                     showToday={false}
+                    value={this.state.expiryDate}
                     className={styles.datePicker}
                   />
                 </Col>
@@ -132,6 +185,8 @@ class DonatePage extends React.Component {
                 className={styles.row}
               >
                 <Button
+                  disabled={!this.checkCanSubmit()}
+                  onClick={this.submitForm}
                   className={styles.submitButton}
                 >
                   Submit
