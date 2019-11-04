@@ -4,7 +4,7 @@ import Center from '../../components/Center/Center';
 import Axios from 'axios';
 import Moment from 'moment';
 import { bloodTypes } from '../../constants/bloodConstants';
-import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, Row, Select, Typography } from 'antd';
+import { Button, Card, Col, DatePicker, Input, InputNumber, Layout, Row, Select, Typography, notification } from 'antd';
 import styles from './DonatePage.module.less';
 
 
@@ -35,7 +35,17 @@ class DonatePage extends React.Component {
         ]
       }
     ).then(res => {
-      console.log(res);
+      if (res.data.status === true) {
+        for (let key in this.state) {
+          this.setState({ [key]: undefined });
+        }
+      }
+      notification['success'](
+        {
+          message: 'Donation submitted',
+          description: 'Your donation has been successfully recorded'
+        }
+      )
     });
   };
 

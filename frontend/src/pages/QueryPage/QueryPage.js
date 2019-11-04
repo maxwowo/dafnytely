@@ -49,7 +49,6 @@ class QueryPage extends React.Component {
       }
     ).then(
       res => {
-        console.log(res);
         this.setState(
           {
             bloodList: [...this.state.bloodList, ...res.data.list]
