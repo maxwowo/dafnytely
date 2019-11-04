@@ -39,7 +39,6 @@ class QueryPage extends React.Component {
     value
   ) => {
     this.setState({ bloodTypeFilter: value, bloodList: [] });
-
     Axios.post(
       '/query',
       {
@@ -50,6 +49,7 @@ class QueryPage extends React.Component {
       }
     ).then(
       res => {
+        console.log(res);
         this.setState(
           {
             bloodList: [...this.state.bloodList, ...res.data.list]
@@ -73,7 +73,6 @@ class QueryPage extends React.Component {
       }
     ).then(
       res => {
-        console.log(res);
         this.setState(
           {
             bloodList: [...this.state.bloodList, ...res.data.list]
