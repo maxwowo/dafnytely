@@ -30,7 +30,6 @@ class RequestPage extends React.Component {
       }
     ).then(res => {
       const status = res.data.status;
-      console.log(status);
       if (status === 'not enought blood') {
         notification['error'](
           {
