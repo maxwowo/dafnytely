@@ -64,7 +64,7 @@ class AdminPage extends React.Component {
 
   state = {
     expired_list: [],
-    alert_list: []
+    order_list: []
   };
 
   componentDidMount() {
@@ -83,6 +83,23 @@ class AdminPage extends React.Component {
         );
       }
       this.setState({ expired_list: res.data.list });
+    });
+
+    Axios.post(
+      '/list',
+      {
+        method: 'get_current'
+      }
+    ).then(res => {
+      if (res.data.list === undefined) {
+        notification['error'](
+          {
+            message: 'Error when retrieving order list',
+            description: 'Undefined res.data.list'
+          }
+        );
+      }
+      this.setState({ order_list: res.data.list });
     });
   }
 
@@ -154,31 +171,39 @@ class AdminPage extends React.Component {
                       {
                         emptyText: (
                           <Empty
-                            description='No alerts'
+                            description='No active orders'
                           />
                         )
                       }
                     }
-                    header='Alerts'
-                  >
-                    {
-                      dummyAlerts.map(item => (
-                        <List.Item>
-                          <Descriptions
-                            className={styles.descriptions}
-                          >
-                            <Descriptions.Item
-                              label='Description'>{item.alertType === alertEnum.OUT_OF_STOCK ? `${item.type} is out of stock` : item.alertType === alertEnum.PREDICTED_BELOW ? `${item.type} is predicted to fall below the threshold in the next 5 days` : `${item.type} is below the threshold`}</Descriptions.Item>
-                            <Descriptions.Item label='Priority'>
-                              {item.alertType === alertEnum.OUT_OF_STOCK ?
-                                <Tag color='red'>High</Tag> : item.alertType === alertEnum.PREDICTED_BELOW ?
-                                  <Tag color='gold'>Medium</Tag> : <Tag color='green'>Low</Tag>}
-                            </Descriptions.Item>
-                          </Descriptions>
-                        </List.Item>
-                      ))
-                    }
-                  </List>
+                    header='Order list'
+                    dataSource={this.state.order_list}
+                    renderItem={item => (
+                      <List.Item>
+                        <Descriptions
+                          title={String(item.id)}
+                          className={styles.descriptions}
+                        >
+                          <Descriptions.Item label="Type">{item.blood_type}</Descriptions.Item>
+                          <Descriptions.Item label="Volume">{BLOOD_UNIT_SIZE} mL</Descriptions.Item>
+                          <Descriptions.Item label="Number of units">{item.num_blood_units}</Descriptions.Item>
+                          <Descriptions.Item label="Minimum expiry date">{item.min_expiry_date}</Descriptions.Item>
+                          <Descriptions.Item/>
+                          <Descriptions.Item/>
+                          <Descriptions.Item>
+                            <Button
+                              onClick={() => {
+                                console.log(item);
+                              }}
+                            >
+                              Mark as completed
+                            </Button>
+                          </Descriptions.Item>
+                        </Descriptions>
+
+                      </List.Item>
+                    )}
+                  />
                 </Col>
               </Row>
             </Col>
