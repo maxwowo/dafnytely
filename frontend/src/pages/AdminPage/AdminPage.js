@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Col, Descriptions, Empty, Layout, List, Row, Tag } from 'antd';
+import { Button, Col, Descriptions, Empty, Layout, List, notification, Row, Tag } from 'antd';
+import Axios from 'axios';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import styles from './AdminPage.module.less';
 import { BLOOD_UNIT_SIZE } from '../../constants/bloodConstants';
@@ -61,6 +62,30 @@ const dummyAlerts = [
 
 class AdminPage extends React.Component {
 
+  state = {
+    expired_list: [],
+    alert_list: []
+  };
+
+  componentDidMount() {
+    Axios.post(
+      '/expire',
+      {
+        method: 'get_all'
+      }
+    ).then(res => {
+      if (res.data.list === undefined) {
+        notification['error'](
+          {
+            message: 'Error when retrieving expired blood list',
+            description: 'Undefined res.data.list'
+          }
+        );
+      }
+      this.setState({ expired_list: res.data.list });
+    });
+  }
+
   render() {
     return (
       <FullSizeLayout>
@@ -91,7 +116,7 @@ class AdminPage extends React.Component {
                       }
                     }
                     header='Expired blood units'
-                    dataSource={dummyBlood}
+                    dataSource={this.state.expired_list}
                     renderItem={item => (
                       <List.Item>
                         <Descriptions
