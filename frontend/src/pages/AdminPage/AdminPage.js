@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Descriptions, Empty, Layout, List, notification, Row } from 'antd';
+import { Button, Col, Descriptions, Empty, Layout, List, notification, Row, Typography } from 'antd';
 import Axios from 'axios';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import styles from './AdminPage.module.less';
@@ -139,7 +139,49 @@ class AdminPage extends React.Component {
                         )
                       }
                     }
-                    header='Expired blood units'
+                    header={
+                      <div>
+                        <Row
+                          type='flex'
+                          justify='space-between'
+                        >
+                          <Col>
+                            <Typography.Text>Expired blood units</Typography.Text>
+                          </Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
+                                Axios.post(
+                                  '/expire',
+                                  {
+                                    method: 'discard_all'
+                                  }
+                                ).then(res => {
+                                  if (res.data.status === undefined || res.data.status === false) {
+                                    notification['error'](
+                                      {
+                                        message: 'Discard all failed',
+                                        description: 'Please try again.'
+                                      }
+                                    );
+                                  } else {
+                                    notification['success'](
+                                      {
+                                        message: 'Discard all succeeded',
+                                        description: 'All of the expired blood units have been deleted from the system.'
+                                      }
+                                    );
+                                    this.refreshExpiredBloodList();
+                                  }
+                                })
+                              }}
+                            >
+                              Mark all as discarded
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    }
                     dataSource={this.state.expired_list}
                     renderItem={item => (
                       <List.Item>
@@ -186,7 +228,6 @@ class AdminPage extends React.Component {
                             </Button>
                           </Descriptions.Item>
                         </Descriptions>
-
                       </List.Item>
                     )}
                   />
@@ -206,7 +247,21 @@ class AdminPage extends React.Component {
                         )
                       }
                     }
-                    header='Order list'
+                    header={
+                      <div>
+                        <Row
+                          type='flex'
+                          justify='space-between'
+                        >
+                          <Col>
+                            <Typography.Text>Order list</Typography.Text>
+                          </Col>
+                          <Col>
+                            <Button>Mark all as completed</Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    }
                     dataSource={this.state.order_list}
                     renderItem={item => (
                       <List.Item>
