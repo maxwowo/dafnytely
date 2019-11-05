@@ -223,7 +223,30 @@ class AdminPage extends React.Component {
                           <Descriptions.Item>
                             <Button
                               onClick={() => {
-                                console.log(item);
+                                Axios.post(
+                                  '/list',
+                                  {
+                                    method: 'finish_order',
+                                    order_id: item.id
+                                  }
+                                ).then(res => {
+                                  if (res.data.status === undefined || res.data.status === false) {
+                                    notification['error'](
+                                      {
+                                        message: 'Complete order failed',
+                                        description: 'Please try again.'
+                                      }
+                                    );
+                                  } else {
+                                    notification['success'](
+                                      {
+                                        message: 'Complete succeeded',
+                                        description: 'The order has been marked as completed'
+                                      }
+                                    );
+                                    this.refreshOrderList();
+                                  }
+                                });
                               }}
                             >
                               Mark as completed
