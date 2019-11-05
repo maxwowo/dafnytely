@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Descriptions, Empty, Layout, List, notification, Row, Tag } from 'antd';
+import { Button, Col, Descriptions, Empty, Layout, List, notification, Row } from 'antd';
 import Axios from 'axios';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
 import styles from './AdminPage.module.less';
@@ -67,7 +67,7 @@ class AdminPage extends React.Component {
     order_list: []
   };
 
-  componentDidMount() {
+  refreshExpiredBloodList = () => {
     Axios.post(
       '/expire',
       {
@@ -84,7 +84,9 @@ class AdminPage extends React.Component {
       }
       this.setState({ expired_list: res.data.list });
     });
+  };
 
+  refreshOrderList = () => {
     Axios.post(
       '/list',
       {
@@ -101,6 +103,11 @@ class AdminPage extends React.Component {
       }
       this.setState({ order_list: res.data.list });
     });
+  };
+
+  componentDidMount() {
+    this.refreshExpiredBloodList();
+    this.refreshOrderList();
   }
 
   render() {
@@ -149,7 +156,30 @@ class AdminPage extends React.Component {
                           <Descriptions.Item>
                             <Button
                               onClick={() => {
-                                console.log(item);
+                                Axios.post(
+                                  '/expire',
+                                  {
+                                    method: 'discard_by_id',
+                                    id: item.id
+                                  }
+                                ).then(res => {
+                                  if (res.data.status === undefined || res.data.status === false) {
+                                    notification['error'](
+                                      {
+                                        message: 'Discard failed',
+                                        description: 'Please try again.'
+                                      }
+                                    );
+                                  } else {
+                                    notification['success'](
+                                      {
+                                        message: 'Discard succeeded',
+                                        description: 'The blood unit has been deleted from the system.'
+                                      }
+                                    );
+                                    this.refreshExpiredBloodList();
+                                  }
+                                });
                               }}
                             >
                               Mark as discarded
