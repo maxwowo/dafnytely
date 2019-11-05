@@ -257,7 +257,35 @@ class AdminPage extends React.Component {
                             <Typography.Text>Order list</Typography.Text>
                           </Col>
                           <Col>
-                            <Button>Mark all as completed</Button>
+                            <Button
+                              onClick={() => {
+                                Axios.post(
+                                  '/list',
+                                  {
+                                    method: 'finish_order_all'
+                                  }
+                                ).then(res => {
+                                  if (res.data.status === undefined || res.data.status === false) {
+                                    notification['error'](
+                                      {
+                                        message: 'Complete all failed',
+                                        description: 'Please try again.'
+                                      }
+                                    );
+                                  } else {
+                                    notification['success'](
+                                      {
+                                        message: 'Complete all succeeded',
+                                        description: 'All of the orders have been marked as completed.'
+                                      }
+                                    );
+                                    this.refreshOrderList();
+                                  }
+                                })
+                              }}
+                            >
+                              Mark all as completed
+                            </Button>
                           </Col>
                         </Row>
                       </div>
