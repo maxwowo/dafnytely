@@ -144,7 +144,7 @@ class AdminPage extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <Descriptions
-                          title={item.type}
+                          title={`ID: ${item.id}`}
                           className={styles.descriptions}
                         >
                           <Descriptions.Item label="Type">{item.type}</Descriptions.Item>
@@ -211,7 +211,7 @@ class AdminPage extends React.Component {
                     renderItem={item => (
                       <List.Item>
                         <Descriptions
-                          title={String(item.id)}
+                          title={`ID: ${String(item.id)}`}
                           className={styles.descriptions}
                         >
                           <Descriptions.Item label="Type">{item.blood_type}</Descriptions.Item>
