@@ -12,6 +12,7 @@ class Expire {
           t = { status: "target blood is not expired" };
         } else {
           database.db.delete_blood(i);
+          return t;
         }
       }
       i++;
