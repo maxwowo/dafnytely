@@ -105,37 +105,6 @@ ensures forall k:: k in results.values==> k>=target;
    }
 }
 
-method get_units_by_date(dates : Dynamic_array,target:int) returns (results: Dynamic_array)
-requires dates!=null
-ensures results!=null
-ensures (forall k:: 0<=k< |dates.values|==> (dates.values[k]>=target==>dates.values[k] in results.values))
-ensures forall k:: k in results.values==> k>=target;
-{
-   var i:=0;
-   results:= new Dynamic_array();
-   assert(results!=null);
-   assert(|results.values|==0);
-   assert(results.values==[]);
-   assert(forall k:: 0<=k<|results.values|==>results.values[k]>=target);
-   assert(forall k:: 0<=k<i ==> (dates.values[k]<target==>!(dates.values[k] in results.values)));
-   while (i< |dates.values|)
-   invariant i<=|dates.values|;
-   invariant (results!=null);
-   invariant forall k:: k in results.values==> k>=target ;
-   invariant forall k:: 0<=k<i ==> (dates.values[k]>=target==>dates.values[k] in results.values);
-   {
-  
-      if(dates.values[i]>=target)
-      {
-         assert(dates.values[i]>=target);
-         results.Add(|results.values|,dates.values[i]);
-         assert(dates.values[i] in results.values);
-      }
-      assert(dates.values[i]>= target ==>dates.values[i] in results.values);
-      i:=i+1;
-   }
-}
-
 method get_units_by_type(types : array<int>,target:int,results: array<bool>)
 requires types!=null && results != null;
 requires types.Length  == results.Length;
