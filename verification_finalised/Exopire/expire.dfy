@@ -14,25 +14,28 @@
       
    }
 
-method discard_by_id (bloodArray: array <int>, id: int, result:bool)
-    requires bloodArray!=null && id != null;
+
+
+method discard_by_id (bloodArray: array?<int>, id: int) returns (result:bool)
+    requires bloodArray!=null && !(id<0);
     //All ids need to be unique
-    requires forall k,i:: 0<=k<i ==> bloodArray[i] != bloodArray[k]
+    requires forall k,i:: 0<=k<i<bloodArray.Length ==> bloodArray[i] != bloodArray[k]
     requires id >= 0;
     ensures result==true ==> (exists k:: 0<=k<bloodArray.Length && bloodArray[k]==id)
 {
     var i := 0;
-    var result := false;
+    result := false;
     while (i<bloodArray.Length)
     invariant 0<=i<=bloodArray.Length;
-    invariant exists k:: 0<=k<bloodArray.Length 
+    invariant result ==true ==> forall k:: 0<=k<bloodArray.Length ==> bloodArray[k]!=id
     {
-        if (bloodArray[i] < id){
-            result: true;
-        else{
-            result: false;
+        if (bloodArray[i] == id){
+            result:= true;
+            return result;
+        }else{
+            result:= false;
         }
-    }
         i:=i+1;
     }
+    return result;
 }
