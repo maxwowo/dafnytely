@@ -25,7 +25,7 @@ class {:autocontracts} BloodOrder {
 
     // Holds a sequece of blood units for a particular customer
     var customer_id: int;
-    var blood_units: seq<BloodUnit>;
+    var blood_units: set<BloodUnit>;
 
     // Determines if a blood order is valid
     predicate Valid()
@@ -35,7 +35,7 @@ class {:autocontracts} BloodOrder {
     }
 
     // Creates a new blood order
-    constructor (customer_id_: int, blood_units_: seq<BloodUnit>)
+    constructor (customer_id_: int, blood_units_: set<BloodUnit>)
     requires 0 <= customer_id_ < 1000000 && |blood_units_| > 0;
     ensures  customer_id == customer_id_ && blood_units == blood_units_;
     {
@@ -48,37 +48,60 @@ class {:autocontracts} BloodOrder {
 class {:autocontracts} BloodBank {
 
     // Holds a sequence of blood units making up the blood bank
-    var blood_units: set<BloodUnit>;
+    var units: seq<BloodUnit>;
 
     // Ensures that the blood bank is in a valid state
     predicate Valid()
     {
-        |blood_units| >= 0
+        |units| >= 0
     }
 
     // Creates an empty blood bank
     constructor ()
-    ensures |blood_units| == 0;
+    ensures |units| == 0;
     {
-        blood_units := [];
+        units := [];
     }
 
     // Gets the length of the sequece of blood units
     method Length() returns (length: int)
-    ensures  length == |blood_units|
+    ensures  length == |units|
     {
-        length := |blood_units|;
+        length := |units|;
     }
 
-    method order_type_units(type: int, units: int, cust_id: int) returns (blood_order: BloodOrder)
+    // Add new blood unit to bank
+    method AddUnit(u: BloodUnit) 
+    ensures u in units; 
     {
-        // Create order units sequence
-        var o_units: seq<BloodUnit := [];
-
-        // Create
+        units := units + [u];
     }
+
+    // Takes out an order 
+    //method order_type_units(type: int, num: int) returns (order: seq<BloodUnit>)
+    //{
+    //}
 }
 
-//method order_type_units(type: string, units: int) returns (order: seq<bloodUnit>)
+method Main() {
+    // Create new blood bank
+    var bank := new BloodBank();
+
+    // Create new blood units
+    var u1 := new BloodUnit(0, 0, 0);
+    var u2 := new BloodUnit(1, 1, 1);
+    var u3 := new BloodUnit(2, 0, 1);
+    var u4 := new BloodUnit(3, 2, 0);
+    var u5 := new BloodUnit(4, 2, 1);
+
+    // Add new blood units to the bank
+    bank.AddUnit(u1); 
+
+    // Print Statements
+    print bank.units, "\n";
+}
 
 //method order_type_date_units(db: array<bloodUnits>, type: string, date: int) returns (order: seq<bloodUnit>)
+//method order_type_units(bBank: seq<BloodUnit>, btype: int, units: int) returns (bloodBank: seq<BloodUnit>, order: seq<BloodUnit>)
+
+
