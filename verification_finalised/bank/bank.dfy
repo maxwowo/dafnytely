@@ -38,7 +38,9 @@ class {:autocontracts} BloodBank {
     // This method ensures that an employee cannot add a unit if the storage is full,
     // and that the same unit cannot be added to the bank twice.
     method AddUnit(unit: int) 
-    requires !Full(); requires unit !in units;
+    requires !Full(); 
+    requires unit !in units;
+    ensures unit in units;
     ensures units == old(units) + [unit]
     {
         units := units + [unit];
@@ -66,16 +68,14 @@ class {:autocontracts} BloodBank {
         }
     }
 
-    // Remove unit from the system, this function requires the unit 
+    // Remove unit from the system by index, this function requires the unit 
     // to be in the system since it does not make sense to remove a unit 
-    // which is not there.
-    method RemoveUnit(unit: int)
-    requires unit in units;
-    ensures |units| == |old(units)| - 1;
-    ensures forall i :: (0<=i<|old(units)| && old(units[i]) != unit) ==> old(units[i]) in units; 
+    // which is not there. This function preserves the order of the list.
+    method RemoveUnitByIndex(index: int)
+    requires 0<=index<|units|;
+    ensures units == old(units[..index]) + old(units[(index+1)..]);
     {
-        var key := FindUnitIndex(unit);
-        units := units[..key] + units[(key+1)..];
+        units := units[..index] + units[(index+1)..];
     }
 
     // Filter units from the system
@@ -85,13 +85,25 @@ class {:autocontracts} BloodBank {
 
 
 method Main() {
-    var bank := new BloodBank();
+    var bank: BloodBank;
+    var i1: int, i2: int, i3: int, i4: int, i5: int;
 
-    // Test 1: 
-    bank.AddUnit(1); assert 1 in bank.units;
-    bank.AddUnit(2); assert 2 in bank.units;
-    bank.RemoveUnit(1); assert 1 !in bank.units; assert 2 in bank.units;
-    var i2 := bank.FindUnitIndex(2); assert i2 == 0;
+    // Test 1: Tests functionality of AddUnit, FindUnitIndex and RemoveUnitByIndex
+    bank := new BloodBank();
+    bank.AddUnit(1); assert bank.units == [1];
+    bank.AddUnit(2); assert bank.units == [1,2];
+    bank.AddUnit(5); assert bank.units == [1,2,5];
+    i2 := bank.FindUnitIndex(2); assert bank.units[i2] == 2;
+    bank.RemoveUnitByIndex(i2); assert bank.units == [1,5];
+    i5 := bank.FindUnitIndex(5); assert bank.units[i5] == 5;
+    bank.RemoveUnitByIndex(i5); assert bank.units == [1];
+    bank.AddUnit(4); assert bank.units == [1,4];
+    bank.AddUnit(2); assert bank.units == [1,4,2];
+    bank.AddUnit(3); assert bank.units == [1,4,2,3];
+    i2 := bank.FindUnitIndex(2); assert bank.units[i2] == 2;
+    i3 := bank.FindUnitIndex(3); assert bank.units[i3] == 3;
+    i4 := bank.FindUnitIndex(4); assert bank.units[i4] == 4;
+    bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
 }
 
 
