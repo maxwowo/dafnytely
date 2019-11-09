@@ -78,11 +78,12 @@ class {:autocontracts} BloodBank {
         units := units[..index] + units[(index+1)..];
     }
 
-    // CheckAvailableUnits takes a criterion and a number of blood units and determines whether 
+    // CheckAvailableUnits takes a criterion c and a number of blood units n and determines whether 
     // the blood bank has enough units satisfying the criterion. The criterion is the same as specified 
     // for OrderUnits
-    method CheckAvailableUnits(criterion: int, num: int) returns (result: bool)
-    ensures units == old(units)
+    method CheckAvailableUnits(c: int, n: int) returns (result: bool)
+    requires n > 0;
+    requires c != 0;
     {
         
     }
@@ -94,8 +95,14 @@ class {:autocontracts} BloodBank {
     // integers, the order function will take an integer 'criterion' and all numbers divisible 
     // by this criterion will be considered 'matches'.
     // OrderUnits modifies the blood bank units sequence.
-    method OrderUnits(criterion: int, num: int) returns (result: seq<int>)
-    {}
+    method OrderUnits(c: int, n: int) returns (results: seq<int>)
+    requires n > 0;
+    requires c != 0;
+    ensures |results| <= n;
+    ensures |results| == 0 ==> forall i :: i in units ==> i%c != 0;
+    ensures |results| >  0 ==> forall i :: i in result ==> (i%c == 0 && i !in units);
+    {
+    }
 
     // FilterUnits returns a sequence of all units in the blood bank which satisfy a particular 
     // criterion c. The criterion works in the same manner as the criterion for OrderUnits. 
