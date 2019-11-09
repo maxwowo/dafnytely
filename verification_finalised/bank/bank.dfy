@@ -96,12 +96,40 @@ class {:autocontracts} BloodBank {
     // by this criterion will be considered 'matches'.
     // OrderUnits modifies the blood bank units sequence.
     method OrderUnits(c: int, n: int) returns (results: seq<int>)
-    requires n > 0;
     requires c != 0;
-    ensures |results| <= n;
-    ensures |results| == 0 ==> forall i :: i in units ==> i%c != 0;
-    ensures |results| >  0 ==> forall i :: i in result ==> (i%c == 0 && i !in units);
+    ensures |units| == |old(units)| - |results|;
+    ensures forall i, j :: (0<=i<|units|&& 0<=j<|units| && i != j) ==> units[i] != units[j];
     {
+        results := []; var new_units := [];
+        var index, limit, count := 0, |units|, 0;
+
+        while index < limit
+        decreases limit - index;
+        invariant index <= limit;
+        invariant |new_units| == |units[..index]| - |results|;
+        invariant forall i :: 0<=i<|results| ==> results[i] in units;
+        invariant forall i :: 0<=i<|new_units| ==> new_units[i] in units;
+        invariant forall i :: index<=i<|units| ==> units[i] !in results && units[i] !in new_units;
+        invariant forall i, j :: (0<=i<|results|&& 0<=j<|results| && i != j) ==> results[i] != results[j];
+        invariant forall i, j :: (0<=i<|new_units|&& 0<=j<|new_units| && i != j) ==> new_units[i] != new_units[j];
+        invariant forall i :: 0<=i<|units[..index]| ==> (units[i] in results && units[i] !in new_units) || (units[i] !in results && units[i] in new_units);
+        {
+            if units[index]%c == 0 && count < n { 
+                results := results + [units[index]]; 
+                count := count + 1; 
+            } else { 
+                new_units := new_units + [units[index]]; 
+            }
+
+            index := index + 1;
+        }
+        //assert |new_units| == |units| - |results|;
+        //assert forall i :: 0<=i<|results| ==> results[i] in units;
+        //assert forall i :: 0<=i<|new_units| ==> new_units[i] in units;
+        //assert forall i, j :: (0<=i<|results|&& 0<=j<|results| && i != j) ==> results[i] != results[j];
+        //assert forall i, j :: (0<=i<|new_units|&& 0<=j<|new_units| && i != j) ==> new_units[i] != new_units[j];
+        //assert forall i :: 0<=i<|units| ==> (units[i] in results && units[i] !in new_units) || (units[i] !in results && units[i] in new_units);
+        units := new_units;
     }
 
     // FilterUnits returns a sequence of all units in the blood bank which satisfy a particular 
@@ -133,6 +161,7 @@ method Main() {
     var bank: BloodBank;
     var i1: int, i2: int, i3: int, i4: int, i5: int;
     var f1: seq<int>, f2: seq<int>;
+    var o1: seq<int>;
 
     // Test 1: Tests functionality of AddUnit, FindUnitIndex and RemoveUnitByIndex
     bank := new BloodBank();
@@ -152,6 +181,8 @@ method Main() {
     i3 := bank.FindUnitIndex(3); assert bank.units[i3] == 3;
     i4 := bank.FindUnitIndex(4); assert bank.units[i4] == 4;
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
+    bank.AddUnit(4); assert bank.units == [1,2,3,4];
+    o1 := bank.OrderUnits(2, 2); print o1, "\n";
 }
 
 
