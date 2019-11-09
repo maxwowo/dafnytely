@@ -1,3 +1,7 @@
+//-----------------------------------------------------------------------------
+// Blood Bank Class
+//-----------------------------------------------------------------------------
+
 // Blood bank class. Contains a sequence of integers, each 
 // representing a hypothetical blood unit. The operations are defined
 // on this sequence are all guarenteed to preserve the valid state of the 
@@ -155,7 +159,15 @@ class {:autocontracts} BloodBank {
     }
 }
 
-// Main method for testing functionality of BloodBank class
+//-----------------------------------------------------------------------------
+// INTEGER INSERT SORT ALGORITHM
+//-----------------------------------------------------------------------------
+
+
+//-----------------------------------------------------------------------------
+// MAIN METHOD TESTING
+//-----------------------------------------------------------------------------
+
 method Main() {
     // Initialise blood bank and index variables
     var bank: BloodBank;
