@@ -1,20 +1,31 @@
-method add(existingBloods: seq<int>, addedBloods: seq<int>, addedBloodsExpired: seq<bool>, resultBloods: seq<bool>)
-requires forall i :: 0 <= i < |existingBloods| ==> 0 <= existingBloods[i] <= 3;
-requires forall i :: 0 <= i < |addedBloods| ==> 0 <= addedBloods[i] <= 3;
-ensures true in addedBloodsExpired ==> |resultBloods| == |existingBloods|;
-ensures !(true in addedBloodsExpired) ==> (|resultBloods| == |existingBloods + addedBloods|)
-{
-    var i: nat := 0;
+class {:autocontracts} BloodBank {
 
-    while (i < |addedBloodsExpired|)
-    invariant 0 <= i <= |addedBloodsExpired|;
-    invariant forall j :: 0 <= j < i ==> addedBloodsExpired[j] == false;
+    var bloods: seq<int>;
+
+    predicate Valid()
     {
-        if (addedBloodsExpired[i] == true) {
-            return;
-        }
-        i := i + 1;
+        |bloods| >= 0
     }
 
-    existingBloods := existingBloods + addedBloods;
-}
+    method add(addedBloods: seq<int>, addedBloodsExpired: seq<bool>)
+    requires forall i :: 0 <= i < |addedBloods| ==> 0 <= addedBloods[i] <= 3;
+    requires |addedBloods| == |addedBloodsExpired|;
+    ensures true in addedBloodsExpired ==> |bloods| == |old(bloods)|;
+    ensures !(true in addedBloodsExpired) ==> (|bloods| == |old(bloods)| + |addedBloods|);
+    modifies this;
+    {
+        var i: nat := 0;
+
+        while (i < |addedBloodsExpired|)
+        invariant 0 <= i <= |addedBloodsExpired|;
+        invariant forall j :: 0 <= j < i ==> addedBloodsExpired[j] == false;
+        {
+            if (addedBloodsExpired[i] == true) {
+                return;
+            }
+            i := i + 1;
+        }
+
+        bloods := bloods + addedBloods;
+    }
+} 
