@@ -77,12 +77,7 @@ class {:autocontracts} BloodBank {
     {
         units := units[..index] + units[(index+1)..];
     }
-
-    // Order blood units
 }
-
-// Sort list of blood units
-
 
 // Main method for testing functionality of BloodBank class
 method Main() {
