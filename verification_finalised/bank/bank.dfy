@@ -100,9 +100,11 @@ class {:autocontracts} BloodBank {
     ensures |units| == |old(units)| - |results|;
     ensures forall i, j :: (0<=i<|units|&& 0<=j<|units| && i != j) ==> units[i] != units[j];
     {
+        // Variable decleration
         results := []; var new_units := [];
         var index, limit, count := 0, |units|, 0;
 
+        // Main loop excecution
         while index < limit
         decreases limit - index;
         invariant index <= limit;
@@ -123,12 +125,8 @@ class {:autocontracts} BloodBank {
 
             index := index + 1;
         }
-        //assert |new_units| == |units| - |results|;
-        //assert forall i :: 0<=i<|results| ==> results[i] in units;
-        //assert forall i :: 0<=i<|new_units| ==> new_units[i] in units;
-        //assert forall i, j :: (0<=i<|results|&& 0<=j<|results| && i != j) ==> results[i] != results[j];
-        //assert forall i, j :: (0<=i<|new_units|&& 0<=j<|new_units| && i != j) ==> new_units[i] != new_units[j];
-        //assert forall i :: 0<=i<|units| ==> (units[i] in results && units[i] !in new_units) || (units[i] !in results && units[i] in new_units);
+
+        // Set units equal to new units
         units := new_units;
     }
 
