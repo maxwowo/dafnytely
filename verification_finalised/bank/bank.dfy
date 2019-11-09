@@ -98,7 +98,9 @@ class {:autocontracts} BloodBank {
     method OrderUnits(c: int, n: int) returns (results: seq<int>)
     requires c != 0;
     ensures |units| == |old(units)| - |results|;
-    ensures forall i, j :: (0<=i<|units|&& 0<=j<|units| && i != j) ==> units[i] != units[j];
+    ensures forall i, j :: (0<=i<|units| && 0<=j<|units| && i != j) ==> units[i] != units[j];
+    ensures forall i, j :: (0<=i<|results|&& 0<=j<|results| && i != j) ==> results[i] != results[j];
+    ensures forall i :: (i in units ==> i !in results) && (i in results ==> i !in units);
     {
         // Variable decleration
         results := []; var new_units := [];
@@ -159,7 +161,7 @@ method Main() {
     var bank: BloodBank;
     var i1: int, i2: int, i3: int, i4: int, i5: int;
     var f1: seq<int>, f2: seq<int>;
-    var o1: seq<int>;
+    var order: seq<int>;
 
     // Test 1: Tests functionality of AddUnit, FindUnitIndex and RemoveUnitByIndex
     bank := new BloodBank();
@@ -180,7 +182,8 @@ method Main() {
     i4 := bank.FindUnitIndex(4); assert bank.units[i4] == 4;
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
     bank.AddUnit(4); assert bank.units == [1,2,3,4];
-    o1 := bank.OrderUnits(2, 2); print o1, "\n";
+    order := bank.OrderUnits(2, 1); print order, "\n";
+    order := bank.OrderUnits(2, 4); print order, "\n";
 }
 
 
