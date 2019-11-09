@@ -78,13 +78,15 @@ class {:autocontracts} BloodBank {
         units := units[..index] + units[(index+1)..];
     }
 
-    // Filter units from the system
+    // Order blood units
 }
 
 // Sort list of blood units
 
 
+// Main method for testing functionality of BloodBank class
 method Main() {
+    // Initialise blood bank and index variables
     var bank: BloodBank;
     var i1: int, i2: int, i3: int, i4: int, i5: int;
 
