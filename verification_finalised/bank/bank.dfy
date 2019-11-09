@@ -77,6 +77,22 @@ class {:autocontracts} BloodBank {
     {
         units := units[..index] + units[(index+1)..];
     }
+
+    // OrderUnits removes the specified number of blood units from the bank which satisfy
+    // a particular criterion. If there are not enough units to meet the specified number, 
+    // the maximum amount available is returned. In the real implementation, the criterion 
+    // may be the type and expiration date of each blood unit. To simulate this criterion with 
+    // integers, the order function will take an integer 'criterion' and all numbers divisible 
+    // by this criterion will be considered 'matches'.
+    // OrderUnits modifies the blood bank units sequence.
+    method OrderUnits(criterion: int, num: int) returns (result: seq<int>)
+    {}
+
+    // FilterUnits returns a sequence of all units in the blood bank which satisfy a particular 
+    // criterion. The criterion works in the same manner as the criterion for OrderUnits. 
+    // FilterUnits does not modifiy the blood bank units sequence.
+    method FilterUnits(criterion: int) returns (result: seq<int>)
+    {}
 }
 
 // Main method for testing functionality of BloodBank class
