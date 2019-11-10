@@ -27,17 +27,6 @@ class {:autocontracts} BloodBank {
             i := i + 1;
         }
 
-        // bloods := bloods + addedBloods;
-
-        var j: nat := 0;
-        while (j < |addedBloods|)
-        invariant 0 <= j <= |addedBloods|;
-        invariant bloods == old(bloods) + addedBloods[0..j];
-        decreases |addedBloods| - j;
-        {
-            var addedBlood := addedBloods[j];
-            bloods := bloods + [addedBlood];
-            j := j + 1;
-        }
+        bloods := bloods + addedBloods;
     }
 } 

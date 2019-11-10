@@ -24,7 +24,7 @@ class DonatePage extends React.Component {
       '/add',
       {
         method: 'add_blood',
-        bloods: [
+        bloods: new Array(this.state.numBloodUnits).fill(
           {
             type: this.state.bloodType,
             arrival_date: today,
@@ -32,7 +32,7 @@ class DonatePage extends React.Component {
             donor_id: this.state.donorId,
             lab_id: this.state.labId
           }
-        ]
+        )
       }
     ).then(res => {
       if (res.data.status === true) {

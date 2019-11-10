@@ -12,7 +12,9 @@ class Add {
       }
     });
     if (r.status != true) return r;
-    body.bloods.forEach(element => bloodDb.add_blood(new Blood(bloodDb.blood_id, element.type, element.arrival_date, element.use_by_date, element.donor_id, element.lab_id)));
+    const added_bloods = body.bloods.map(element => new Blood(bloodDb.blood_id, element.type, element.arrival_date, element.use_by_date, element.donor_id, element.lab_id))
+    bloodDb.add_bloods(added_bloods);
+    // body.bloods.forEach(element => bloodDb.add_blood(new Blood(bloodDb.blood_id, element.type, element.arrival_date, element.use_by_date, element.donor_id, element.lab_id)));
     return r;
   }
 

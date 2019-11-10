@@ -66,10 +66,14 @@ class Db {
     this.orders.splice(key, 1);
   }
 
-  add_blood(blood) {
-    this.blood_id++;
-    this.bloods.push(blood);
+  // add_blood(blood) {
+  //   this.blood_id++;
+  //   this.bloods.push(blood);
+  // }
 
+  add_bloods(added_bloods) {
+    this.blood_id += added_bloods.length;
+    this.bloods.push(...added_bloods);
   }
 
   delete_blood(key) {
