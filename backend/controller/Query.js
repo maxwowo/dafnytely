@@ -4,6 +4,10 @@ const Moment = require('moment');
 class Query {
   static async get_units_by_type(body) {
 
+    let b_type = body.type;
+    let result = bloodDb.get_units_by_type(b_type)
+    
+    // Process Request
     let i = 0;
     let results = new Array(bloodDb.db.bloods.length).fill(false);
     while (i < bloodDb.db.bloods.length) {
@@ -13,6 +17,7 @@ class Query {
       i++;
     }
 
+    
     let bloodlist = [];
     results.forEach((item, i) => {
       if (item == true) {

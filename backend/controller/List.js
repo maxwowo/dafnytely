@@ -4,13 +4,10 @@ class List {
 
   static async get_current(body) {
     return { list: database.db.orders };
-
   }
 
   static async finish_order(body) {
     let i = 0;
-
-
     if (body.order_id < 0 || body.order_id >= database.db.orders.length) {
       return { status: 'invalid index' };
     }

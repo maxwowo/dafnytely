@@ -1,5 +1,5 @@
 const Blood = require('../schema/Blood');
-const l = [
+const units = [
   {
     'id': 1,
     'type': 'A',
@@ -43,19 +43,27 @@ const l = [
 ];
 
 
-class Db {
+class Bank {
   constructor() {
-    this.bloods = [];
-    this.orders = [];
-    this.order_id = 0;
-    this.blood_id = 0;
-
-    l.forEach(item => {
-      this.blood_id++;
-      this.bloods.push(new Blood(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
-    });
+    this.units = [];
+    this.unit_ids = 0;
   }
 
+  // Adds a list of new units to the Bank. 
+  // NOT VERIFIED YET
+  add_units(new_units) {
+
+  }
+
+  // Adds a new blood unit to the bank. Function Verified in DANFY.
+  // VERIFIED
+  add_unit(new_unit) {
+    this.units.push(new_unit);
+  }
+
+  // Function returns a list of blood units which have a given type.
+  // Function has been verified in Dafny as 'filter' in the bank class.
+  // VERIFIED
   get_units_by_type(type) {
     results = [];
     let index = 0;
@@ -66,40 +74,24 @@ class Db {
         results.push(this.bloods[index])
       }
     }
-    
   }
 
-  add_order(order) {
-    this.order_id++;
-    this.orders.push(order);
+  // Function returns a list of blood units which have a given type and
+  // certain minimum expiry. Function has been verified in Dafny as 'filter'
+  // in the bank class.
+  // VERIFIED
+  get_units_by_type_date(type, min_date) {
 
   }
 
-  delete_order(key) {
-    this.orders.splice(key, 1);
+  // Function returns a list of blood units which have a certain minimum expiry. 
+  // Function has been verified in Dafny as 'filter' in the bank class.
+  // VERIFIED
+  get_units_by_date(min_date) {
+
   }
 
-  // add_blood(blood) {
-  //   this.blood_id++;
-  //   this.bloods.push(blood);
-  // }
-
-  add_bloods(added_bloods) {
-    this.blood_id += added_bloods.length;
-    this.bloods.push(...added_bloods);
-  }
-
-  delete_blood(key) {
-    this.bloods.splice(key, 1);
-  }
 }
 
-const blood_expire = (date1, date2 = new Date()) => {
-  return date1 < date2;
-};
-
-const database = new Db();
-module.exports = {
-  db: database,
-  blood_expire: blood_expire
-};
+const bank = new Bank();
+module.exports = bank;
