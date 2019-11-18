@@ -50,8 +50,8 @@ class Bank {
 
     // Add defualt blood units to bank
     default_units.forEach(item => {
-      this.blood_id++;
-      this.bloods.push(new Blood(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
+      this.unit_ids++;
+      this.units.push(new Blood(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
     });
   }
 

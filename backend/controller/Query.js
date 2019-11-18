@@ -1,4 +1,4 @@
-const Bank = require('../new_model/Bank');
+const Bank = require('../model/Bank');
 const Moment = require('moment');
 
 class Query {
