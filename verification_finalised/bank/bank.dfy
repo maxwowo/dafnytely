@@ -19,7 +19,7 @@ class {:autocontracts} BloodBank {
     reads this;
     {
         0 <= |units| <= 100000 &&
-        forall i, j :: (0<=i<|units|&& 0<=j<|units| && i != j) ==> units[i] != units[j]
+        forall i, j :: (0<=i<|units| && 0<=j<|units| && i != j) ==> units[i] != units[j]
     }
 
     // Constructor for blood bank takes no arguments and creates
@@ -47,7 +47,15 @@ class {:autocontracts} BloodBank {
     ensures unit in units;
     ensures units == old(units) + [unit]
     {
-        units := units + [unit];
+        var index, limit := 0, |units|;
+        while unit > units[index] && index < limit
+        decreases limit - index;
+        invariant index <= limit;
+        invariant forall i :: 0<=i<index ==> units[i] < unit;
+        {
+            i := i + 1;           
+        }
+        units := units[..index] + [unit] + units[index+1..];
     }
 
     // Finds the index of a given unit, if the unit does not exist 
@@ -80,16 +88,6 @@ class {:autocontracts} BloodBank {
     ensures units == old(units[..index]) + old(units[(index+1)..]);
     {
         units := units[..index] + units[(index+1)..];
-    }
-
-    // CheckAvailableUnits takes a criterion c and a number of blood units n and determines whether 
-    // the blood bank has enough units satisfying the criterion. The criterion is the same as specified 
-    // for OrderUnits
-    method CheckAvailableUnits(c: int, n: int) returns (result: bool)
-    requires n > 0;
-    requires c != 0;
-    {
-        
     }
 
     // OrderUnits removes the specified number of blood units from the bank which satisfy
@@ -173,6 +171,7 @@ method Main() {
     var bank: BloodBank;
     var i1: int, i2: int, i3: int, i4: int, i5: int;
     var f1: seq<int>, f2: seq<int>;
+    var available: seq<int>;
     var order: seq<int>;
 
     // Test 1: Tests functionality of AddUnit, FindUnitIndex and RemoveUnitByIndex
@@ -194,8 +193,8 @@ method Main() {
     i4 := bank.FindUnitIndex(4); assert bank.units[i4] == 4;
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
     bank.AddUnit(4); assert bank.units == [1,2,3,4];
-    order := bank.OrderUnits(2, 1); print order, "\n";
-    order := bank.OrderUnits(2, 4); print order, "\n";
+    available := bank.GetAvailableUnits(2); assert bank.units == [1,2,3,4]; assert 2 in available; assert 4 in available;
+    order := bank.OrderUnits2([2]); assert order := [2]; 
 }
 
 
