@@ -18,7 +18,8 @@ class {:autocontracts} BloodBank {
     predicate Valid() 
     reads this;
     {
-        0 <= |units| <= 100000 &&
+        0 <= |units| <= 100000 && 
+        forall i :: 0<=i<|units| ==> units[i] >= 0 &&
         forall i, j :: (0<=i<|units| && 0<=j<|units| && i != j) ==> units[i] != units[j]
     }
 
@@ -43,18 +44,32 @@ class {:autocontracts} BloodBank {
     // and that the same unit cannot be added to the bank twice.
     method AddUnit(unit: int) 
     requires !Full(); 
+    requires unit >= 0;
     requires unit !in units;
+    ensures unit >= 0;
     ensures unit in units;
     ensures units == old(units) + [unit]
     {
         units := units + [unit];
     }
 
+    // NEEDS TO BE VERIFIED
     // Gets a unit with a given id from the list. In this case,
     // matching id is simulated by the '==' relation since this
     // will be unique of the list of units in the bank.
-    method GetUnitById(id: int) returns (id: int)
-    {}
+    method GetUnitById(id: int) returns (unit: int)
+    {
+        unit := -1;
+        var index, limit := 0, |units|;
+        
+        while index < limit 
+        decreases limit - index;
+        invariant index <= limit;
+        {
+            if id == units[index] { unit := units[index]; }
+            index := index + 1;
+        }
+    }
 
 
     // Finds the index of a given unit, if the unit does not exist 
@@ -170,6 +185,7 @@ method Main() {
     var bank: BloodBank;
     var i1: int, i2: int, i3: int, i4: int, i5: int;
     var f1: seq<int>, f2: seq<int>;
+    var unit: int;
     var available: seq<int>;
     var order: seq<int>;
 
@@ -192,7 +208,7 @@ method Main() {
     i4 := bank.GetUnitIndex(4); assert bank.units[i4] == 4;
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
     bank.AddUnit(4); assert bank.units == [1,2,3,4];
-    order := bank.OrderUnits(2, 1);  
+    unit := bank.GetUnitById(2); print unit, "\n";
 }
 
 

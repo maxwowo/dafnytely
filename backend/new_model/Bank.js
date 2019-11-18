@@ -58,13 +58,22 @@ class Bank {
   // NOT VERIFIED: GetUnitById
   // Gets a particular unit given an id
   get_unit_by_id(id) {
-
+    // TODO
   }
 
   // VERIFIED: GetUnitIndex
   // Gets the index of a given unit
   get_unit_index(unit) {
+    let key = -1; 
+    let index = 0; 
+    let limit = this.units.length;
 
+    while (index < limit) {
+      if (unit == this.units[index]) { key = index; }
+      index = index + 1;
+    }
+
+    return index;
   }
 
   // VERIFIED: FilterUnits
@@ -126,8 +135,8 @@ class Bank {
 
   // VERIFIED: RemoveUnitByIndex
   // Removes the unit at the given index
-  remove_unit_by_index(unit) {
-
+  remove_unit_by_index(index) {
+    this.units = this.units.slice(0, index) + this.units.slice(index+1, this.units.length);
   }
 
 }
