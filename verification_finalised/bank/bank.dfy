@@ -47,15 +47,7 @@ class {:autocontracts} BloodBank {
     ensures unit in units;
     ensures units == old(units) + [unit]
     {
-        var index, limit := 0, |units|;
-        while unit > units[index] && index < limit
-        decreases limit - index;
-        invariant index <= limit;
-        invariant forall i :: 0<=i<index ==> units[i] < unit;
-        {
-            i := i + 1;           
-        }
-        units := units[..index] + [unit] + units[index+1..];
+        units := units + [unit];
     }
 
     // Finds the index of a given unit, if the unit does not exist 
@@ -193,8 +185,7 @@ method Main() {
     i4 := bank.FindUnitIndex(4); assert bank.units[i4] == 4;
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
     bank.AddUnit(4); assert bank.units == [1,2,3,4];
-    available := bank.GetAvailableUnits(2); assert bank.units == [1,2,3,4]; assert 2 in available; assert 4 in available;
-    order := bank.OrderUnits2([2]); assert order := [2]; 
+    order := bank.OrderUnits(2, 1); 
 }
 
 

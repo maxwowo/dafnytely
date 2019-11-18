@@ -1,3 +1,4 @@
+
 //-----------------------------------------------------------------------------
 // Blood Bank Class
 //-----------------------------------------------------------------------------
@@ -12,16 +13,6 @@ class {:autocontracts} BloodBank {
     // Sequence of integers representing blood units
     var units: seq<int>;
 
-    // Determines wether the blood bank is in a valid state
-    // The units must be distinct integers and the blood bank 
-    // can only hold between 0 and 100,000 units 
-    predicate Valid() 
-    reads this;
-    {
-        0 <= |units| <= 100000 &&
-        forall i, j :: (0<=i<|units| && 0<=j<|units| && i != j) ==> units[i] != units[j]
-    }
-
     // Constructor for blood bank takes no arguments and creates
     // an empty units sequence
     constructor () 
@@ -31,6 +22,16 @@ class {:autocontracts} BloodBank {
         units := [];
     }
 
+    // Determines wether the blood bank is in a valid state
+    // The units must be distinct integers and the blood bank 
+    // can only hold between 0 and 100,000 units 
+    predicate Valid() 
+    reads this;
+    {
+        0 <= |units| <= 100000 &&
+        forall i, j :: (0<=i<|units|-1 && j==i+1) ==> units[i] < units[j]
+    }
+
     // Predicate to determine if the bank is full or not
     predicate Full()
     reads this;
@@ -38,27 +39,42 @@ class {:autocontracts} BloodBank {
         |units| == 100000
     }
 
+    function method InsertIndex(index: int, val: int): bool
+    reads this;
+    requires 0<=index<=|units|;
+    {
+        forall i :: 0<=i<index ==> units[i] < val &&
+        forall i :: index<=i<|units| ==> units[i] > val 
+    }
+    
+    method FindInsertIndex(unit: int) returns (res: int)
+    requires !Full();
+    {
+        var index:= 0;
+        res := -1;
+        while index < |units|
+        decreases |units| - index;
+        invariant 0<=index<=|units|;
+        invariant res != -1 ==> 0<=res<=|units|;
+        invariant res != -1 ==> InsertIndex(res, unit);
+        {
+            if InsertIndex(index, unit) { res := index; }
+            index := index + 1;
+        }
+    }
+
     // Add an new unit to the system
     // This method ensures that an employee cannot add a unit if the storage is full,
     // and that the same unit cannot be added to the bank twice.
-    method AddUnit(unit: int) 
+    method InsertUnit(unit: int, index: int) 
     requires !Full(); 
     requires unit !in units;
-    ensures unit in units;
-    ensures units == old(units) + [unit]
+    requires 0<=index<=|units|;
+    requires InsertIndex(index, unit);
+    ensures 
     {
-        var index, limit := 0, |units|;
-        while unit > units[index] && index < limit
-        decreases limit - index;
-        invariant index <= limit;
-        invariant forall i :: 0<=i<index ==> units[i] < unit;
-        {
-            index := index + 1;           
-        }
-        if index == limit 
-        { units := units[..index] + [unit]; }
-        else 
-        { units := units[..index] + [unit] + units[index+1..]; }
+        
+        units := units[..index] + [unit] + units[index..];
     }
 }
 
@@ -72,8 +88,9 @@ method Main() {
 
     // Test 1: Tests functionality of AddUnit, FindUnitIndex and RemoveUnitByIndex
     bank := new BloodBank();
-    bank.AddUnit(1); //assert bank.units == [1];
-    bank.AddUnit(5); //assert bank.units == [1,2];
-    bank.AddUnit(2); //assert bank.units == [1,2,5];
+    //bank.AddUnit(1); //assert bank.units == [1];
+    //bank.AddUnit(5); //assert bank.units == [1,2];
+    //bank.AddUnit(2); //assert bank.units == [1,2,5];
     print bank.units;
+
 }
