@@ -49,12 +49,6 @@ class Bank {
     this.unit_ids = 0;
   }
 
-  // Adds a list of new units to the Bank. 
-  // NOT VERIFIED YET
-  add_units(new_units) {
-
-  }
-
   // Adds a new blood unit to the bank. Function Verified in DANFY.
   // VERIFIED
   add_unit(new_unit) {
@@ -65,13 +59,13 @@ class Bank {
   // Function has been verified in Dafny as 'filter' in the bank class.
   // VERIFIED
   get_units_by_type(type) {
-    results = [];
+    let results = [];
     let index = 0;
-    let limit = this.bloods.length;
+    let limit = this.units.length;
 
     while (index < limit) {
-      if (this.bloods[i].type == type) { 
-        results.push(this.bloods[index])
+      if (this.units[i].type == type) { 
+        results.push(this.units[index])
       }
     }
   }
@@ -81,14 +75,30 @@ class Bank {
   // in the bank class.
   // VERIFIED
   get_units_by_type_date(type, min_date) {
+    let results = [];
+    let index = 0;
+    let limit = this.units.length;
 
+    while (index < limit) {
+      if (this.units[i].type == type && this.units[i].before(min_date)) { 
+        results.push(this.units[index])
+      }
+    }
   }
 
   // Function returns a list of blood units which have a certain minimum expiry. 
   // Function has been verified in Dafny as 'filter' in the bank class.
   // VERIFIED
   get_units_by_date(min_date) {
+    let results = [];
+    let index = 0;
+    let limit = this.units.length;
 
+    while (index < limit) {
+      if (this.units[i].before(min_date)) { 
+        results.push(this.units[index])
+      }
+    }
   }
 
 }

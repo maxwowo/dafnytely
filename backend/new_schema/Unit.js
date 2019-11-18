@@ -13,6 +13,11 @@ class Unit {
   expired() {
     return new Date(this.use_by_date) < new Date();
   }
+
+  // True if the blood unit expires after the given date
+  before(date) {
+    return new Date(this.use_by_date) < new Date(date);
+  }
 }
 
 module.exports = Unit;

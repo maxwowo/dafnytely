@@ -4,7 +4,7 @@ const Blood = require('../schema/Blood');
 class Add {
   static async add_blood(body) {
     // Get Blood Units from request as list, if unit is expired, do not add it to list
-    new_units = []
+    let new_units = []
     for (let i = 0; i < body.bloods.length; i++) {
       unit = new Unit(Bank.blood_id, element.type, element.arrival_date, element.use_by_date, element.donor_id, element.lab_id);
       if (!unit.expired()) {

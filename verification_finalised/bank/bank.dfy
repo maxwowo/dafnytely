@@ -81,6 +81,7 @@ class {:autocontracts} BloodBank {
     {
         units := units[..index] + units[(index+1)..];
     }
+    
 
     // OrderUnits removes the specified number of blood units from the bank which satisfy
     // a particular criterion. If there are not enough units to meet the specified number, 
@@ -185,7 +186,7 @@ method Main() {
     i4 := bank.FindUnitIndex(4); assert bank.units[i4] == 4;
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
     bank.AddUnit(4); assert bank.units == [1,2,3,4];
-    order := bank.OrderUnits(2, 1); 
+    order := bank.OrderUnits(2, 1);  
 }
 
 
