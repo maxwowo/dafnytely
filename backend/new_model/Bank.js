@@ -139,6 +139,11 @@ class Bank {
     this.units = this.units.slice(0, index) + this.units.slice(index+1, this.units.length);
   }
 
+  // NOT VERIFIED: RemoveOrderedUnits
+  // Removes a list of units which have been ordered from the Bank
+  remove_ordered_units(units) {
+
+  }
 }
 
 const bank = new Bank();
