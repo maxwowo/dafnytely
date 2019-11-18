@@ -1,46 +1,48 @@
-const database = require('../model/db');
+const Bank = require('../model/Bank');
 
 class Expire {
 
+  // Discards a particular blood unit if it is expired
   static async discard_by_id(body) {
-    let t = { status: true };
-    let i = 0;
-    database.db.bloods.forEach(blood => {
-      if (blood.id == body.id) {
-        if (!database.blood_expire(new Date(blood.use_by_date))) {
-          t = { status: 'target blood is not expired' };
-        } else {
-          database.db.delete_blood(i);
-        }
+    let res = { status: true };
+    let id = body.id;
 
-      }
-      i++;
-    });
-    return t;
+    // Gets the unit and its index 
+    let unit = Bank.get_unit_by_id(id);                     // VERIFIED: GetUnitById
+    let index = Bank.get_unit_index(unit);                  // VERIFIED: FindUnitIndex
+
+    // Checks whether the date is expired or not and removes 
+    // the unit if it is expired.
+    if (unit.expired()) {
+        res = { status: 'target blood is not expired' };
+    } else {
+        Bank.remove_unit_by_index(index);                   // VERIFIED: RemoveUnitByIndex
+    }
+
+    // Return status object
+    return res;
   }
 
+  // Discrads all expired blood units
   static async discard_all(body) {
-    let i = 0;
-    let remove = [];
-    database.db.bloods.forEach((blood, i) => {
+    // Get the expired units from the blood bank.
+    let remove = Bank.get_expired_units();                  // VERIFIED: FilterUnits
 
-      if (database.blood_expire(new Date(blood.use_by_date))) {
-        remove.unshift(i);
-      }
-      i++;
-    });
-    remove.forEach(a => database.db.delete_blood(a));
-    return { status: database.db.bloods };
+    // For each unit in remove, find its index and remove
+    // it from the bank
+    for (let i = 0; i < remove.length; i++) {
+        let index = Bank.get_unit_index(remove[i]);        // VERIFIED: FindUnitByIndex
+        Bank.remove_unit_by_index(index);                   // VERIFIED: RemoveUnitByIndex
+    }
+    
+    // Return resultant units
+    return { status: Bank.units };
   }
 
+  // Gets all epired blood units
   static async get_all(body) {
-    let r = [];
-    database.db.bloods.forEach((blood) => {
-      if (database.blood_expire(new Date(blood.use_by_date))) {
-        r.push(blood);
-      }
-    });
-    return { list: r };
+    let expired = Bank.get_expired_units();                 // VERIFIED: FilterUnits
+    return { list: expired };
   }
 
 

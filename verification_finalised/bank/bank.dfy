@@ -104,6 +104,13 @@ class {:autocontracts} BloodBank {
         units := units[..index] + units[(index+1)..];
     }
 
+    // NEEDS TO BE VERIFIED
+    // Removes a list of units which have been ordered from the bank
+    method RemoveOrderedUnits(s: seq<int>) 
+    {
+
+    }
+
     // OrderUnits removes the specified number of blood units from the bank which satisfy
     // a particular criterion. If there are not enough units to meet the specified number, 
     // the maximum amount available is returned. In the real implementation, the criterion 

@@ -1,29 +1,32 @@
-const database = require('../model/db');
+const Orders = require('../model/Orders');
 
+// Provides functions on the set of Vampire Orders
 class List {
 
+  // Return list of all current orders
   static async get_current(body) {
-    return { list: database.db.orders };
+    return { list: Orders.orders };
   }
 
+  // Remove given order from the system
   static async finish_order(body) {
-    let i = 0;
-    if (body.order_id < 0 || body.order_id >= database.db.orders.length) {
+    // Get index of order
+    let index = Orders.get_order_index_by_id(body.order_id);
+
+    // If the index was not found, return error
+    if (index == -1) {
       return { status: 'invalid index' };
     }
-    while (i < database.db.orders.length) {
-      if (body.order_id === database.db.orders[i].id) {
-        database.db.delete_order(i);
-        break;
-      }
-    }
+
+    // Remove the order from the list of orders
+    Orders.remove_order_by_index(index);
+
     return { status: true };
   }
 
+  // Remove all orders from the system
   static async finish_order_all(body) {
-    while (database.db.orders.length > 0) {
-      database.db.delete_order(0);
-    }
+    Orders.remove_all();
     return { status: true };
   }
 }

@@ -1,5 +1,5 @@
 const Blood = require('../schema/Blood');
-const units = [
+const default_units = [
   {
     'id': 1,
     'type': 'A',
@@ -47,6 +47,12 @@ class Bank {
   constructor() {
     this.units = [];
     this.unit_ids = 0;
+
+    // Add defualt blood units to bank
+    default_units.forEach(item => {
+      this.blood_id++;
+      this.bloods.push(new Blood(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
+    });
   }
 
   // VERIFIED: AddUnit

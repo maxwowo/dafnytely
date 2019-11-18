@@ -1,28 +1,26 @@
-const schema = require('../model/db');
-const bloodDb = schema.db;
+const Bank = require('../new_model/Bank');
 const Blood = require('../schema/Blood');
 
 class Add {
   static async add_blood(body) {
-
-    // Processes request
-    let i = 0;
-    let r = { status: true };
-    body.bloods.forEach(element => {
-      if (schema.blood_expire(new Date(element.use_by_date))) {
-        r = { status: 'expire item' };
+    // Get Blood Units from request as list, if unit is expired, do not add it to list
+    let new_units = []
+    for (let i = 0; i < body.bloods.length; i++) {
+      unit = new Unit(Bank.blood_id, element.type, element.arrival_date, element.use_by_date, element.donor_id, element.lab_id);
+      if (!unit.expired()) {
+        new_units.push(unit);
       }
-    });
-    if (r.status != true) return r;
-    const added_bloods = body.bloods.map(element => new Blood(bloodDb.blood_id, element.type, element.arrival_date, element.use_by_date, element.donor_id, element.lab_id))
+    }
     
-    // Makes call to add blood units to bank: Dafny Verified
-    bloodDb.add_bloods(added_bloods);
+    // For each new unit add it to the blood bank
+    for (let i = 0; i < new_units.length; i++) {
+      // DAFNY verified add_unit function
+      Bank.add_unit(new_units[i]);
+    }
 
     // Returns status
-    return r;
+    return { status: true };
   }
-
 }
 
 module.exports = Add;
