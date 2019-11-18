@@ -1,4 +1,4 @@
-const Blood = require('../schema/Blood');
+const Unit = require('../schema/Unit');
 const default_units = [
   {
     'id': 1,
@@ -51,7 +51,7 @@ class Bank {
     // Add defualt blood units to bank
     default_units.forEach(item => {
       this.unit_ids++;
-      this.units.push(new Blood(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
+      this.units.push(new Unit(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
     });
   }
 
