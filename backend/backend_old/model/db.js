@@ -72,7 +72,6 @@ class Db {
   add_order(order) {
     this.order_id++;
     this.orders.push(order);
-
   }
 
   delete_order(key) {

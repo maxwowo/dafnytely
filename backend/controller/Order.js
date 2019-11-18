@@ -1,12 +1,13 @@
 
 const Bank = require('../model/Bank');
 const OrderItem = require('../schema/Order');
+
 const sort=(a,b)=>{
-    let adate = new Date(a.use_by_date)
-    let bdate= new Date ( b.use_by_date)
-    if(adate>bdate)return 1;
-    else return -1;
+    let adate = new Date(a.use_by_date);
+    let bdate = new Date (b.use_by_date);
+    if (adate > bdate) { return 1; } else { return -1; };
 }
+
 class Order {
 
     static async order_type_units(body){

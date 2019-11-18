@@ -64,7 +64,11 @@ class Bank {
   // NOT VERIFIED: GetUnitById
   // Gets a particular unit given an id
   get_unit_by_id(id) {
-    // TODO
+    for (let i = 0; i < units.length; i++) {
+      if (this.units[i].id == id) {
+        return this.units[i];
+      }
+    }
   }
 
   // VERIFIED: GetUnitIndex
@@ -79,7 +83,7 @@ class Bank {
       index = index + 1;
     }
 
-    return index;
+    return key;
   }
 
   // VERIFIED: FilterUnits
@@ -147,8 +151,8 @@ class Bank {
 
   // NOT VERIFIED: RemoveOrderedUnits
   // Removes a list of units which have been ordered from the Bank
-  remove_ordered_units(units) {
-
+  remove_ordered_units(r_units) {
+    r_units.forEach(a => this.units.splice(this.units.indexOf(a), 1));
   }
 }
 

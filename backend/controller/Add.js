@@ -1,5 +1,4 @@
-const Bank = require('../new_model/Bank');
-const Blood = require('../schema/Blood');
+const Bank = require('../model/Bank');
 
 class Add {
   static async add_blood(body) {
