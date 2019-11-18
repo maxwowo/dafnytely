@@ -16,7 +16,7 @@ class Unit {
 
   // True if the blood unit expires after the given date
   before(date) {
-    return new Date(this.use_by_date) < new Date(date);
+    return new Date(this.use_by_date) > new Date(date);
   }
 }
 

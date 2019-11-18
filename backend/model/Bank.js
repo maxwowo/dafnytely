@@ -65,7 +65,7 @@ class Bank {
   // Gets a particular unit given an id
   get_unit_by_id(id) {
     for (let i = 0; i < units.length; i++) {
-      if (this.units[i].id == id) {
+      if (this.units[i].id === id) {
         return this.units[i];
       }
     }
@@ -79,7 +79,7 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (unit == this.units[index]) { key = index; }
+      if (unit === this.units[index]) { key = index; }
       index = index + 1;
     }
 
@@ -94,9 +94,10 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[index].type == type) { 
+      if (this.units[index].type === type) { 
         results.push(this.units[index])
       }
+      index = index + 1;
     }
 
     return results;
@@ -111,9 +112,10 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[index].type == type && this.units[index].before(min_date)) { 
+      if (this.units[index].type === type && this.units[index].before(min_date)) { 
         results.push(this.units[index])
       }
+      index = index + 1;
     }
 
     return results;
@@ -130,6 +132,7 @@ class Bank {
       if (this.units[index].before(min_date)) { 
         results.push(this.units[index])
       }
+      index = index + 1;
     }
 
     return results;
@@ -146,6 +149,7 @@ class Bank {
       if (this.units[index].expired()) { 
         results.push(this.units[index])
       }
+      index = index + 1;
     }
 
     return results;
