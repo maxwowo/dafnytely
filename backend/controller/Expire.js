@@ -6,14 +6,10 @@ class Expire {
     let i = 0;
     while (i < database.db.bloods.length) {
       if (database.db.bloods[i].id == body.id) {
-        if (
-          !database.blood_expire(new Date(database.db.bloods[i].use_by_date))
-        ) {
-          t = { status: "target blood is not expired" };
-        } else {
-          database.db.delete_blood(i);
-          return t;
-        }
+        database.db.delete_blood(i);
+        return t;
+      } else {
+        t = { status: "target blood is not expired" };
       }
       i++;
     }
@@ -21,20 +17,14 @@ class Expire {
   }
 
   static async discard_all(body) {
-    let i = 0;
-    let remove = [];
-    while (i < database.db.bloods.length) {
-      if (database.blood_expire(new Date(database.db.bloods[i].use_by_date))) {
-        remove.unshift(i);
-      }
-      i++;
+    let i = database.db.bloods.length;
+    while (0 < i) {
+      database.db.delete_blood(i);
+      i--;
     }
-
-    i = 0;
-    while (i < remove.length) {
-      database.db.delete_blood(remove[i]);
-      i++;
-    }
+    console.log(database.db.bloods.length);
+    console.log(database.db.bloods);
+    console.log(i);
     return { status: database.db.bloods };
   }
 
