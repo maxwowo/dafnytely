@@ -50,9 +50,16 @@ class {:autocontracts} BloodBank {
         units := units + [unit];
     }
 
+    // Gets a unit with a given id from the list. In this case,
+    // matching id is simulated by the '==' relation since this
+    // will be unique of the list of units in the bank.
+    method GetUnitById(id: int) returns (id: int)
+    {}
+
+
     // Finds the index of a given unit, if the unit does not exist 
     // the function returns -1
-    method FindUnitIndex(unit: int) returns (key: int)
+    method GetUnitIndex(unit: int) returns (key: int)
     ensures units == old(units);
     ensures key == -1 ==> unit !in units;
     ensures key >=  0 ==> (key < |units| && units[key] == unit);    
@@ -81,7 +88,6 @@ class {:autocontracts} BloodBank {
     {
         units := units[..index] + units[(index+1)..];
     }
-    
 
     // OrderUnits removes the specified number of blood units from the bank which satisfy
     // a particular criterion. If there are not enough units to meet the specified number, 
@@ -167,23 +173,23 @@ method Main() {
     var available: seq<int>;
     var order: seq<int>;
 
-    // Test 1: Tests functionality of AddUnit, FindUnitIndex and RemoveUnitByIndex
+    // Test 1: Tests functionality of AddUnit, GetUnitIndex and RemoveUnitByIndex
     bank := new BloodBank();
     bank.AddUnit(1); assert bank.units == [1];
     bank.AddUnit(2); assert bank.units == [1,2];
     bank.AddUnit(5); assert bank.units == [1,2,5];
-    i2 := bank.FindUnitIndex(2); assert bank.units[i2] == 2;
+    i2 := bank.GetUnitIndex(2); assert bank.units[i2] == 2;
     bank.RemoveUnitByIndex(i2); assert bank.units == [1,5];
-    i5 := bank.FindUnitIndex(5); assert bank.units[i5] == 5;
+    i5 := bank.GetUnitIndex(5); assert bank.units[i5] == 5;
     bank.RemoveUnitByIndex(i5); assert bank.units == [1];
     bank.AddUnit(4); assert bank.units == [1,4];
     bank.AddUnit(2); assert bank.units == [1,4,2];
     bank.AddUnit(3); assert bank.units == [1,4,2,3];
     f1 := bank.FilterUnits(2); assert 2 in f1 && 4 in f1 && 1 !in f1 && 3 !in f1;
     f2 := bank.FilterUnits(3); assert 3 in f2 && 1 !in f2 && 2 !in f2 && 4 !in f2;
-    i2 := bank.FindUnitIndex(2); assert bank.units[i2] == 2;
-    i3 := bank.FindUnitIndex(3); assert bank.units[i3] == 3;
-    i4 := bank.FindUnitIndex(4); assert bank.units[i4] == 4;
+    i2 := bank.GetUnitIndex(2); assert bank.units[i2] == 2;
+    i3 := bank.GetUnitIndex(3); assert bank.units[i3] == 3;
+    i4 := bank.GetUnitIndex(4); assert bank.units[i4] == 4;
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
     bank.AddUnit(4); assert bank.units == [1,2,3,4];
     order := bank.OrderUnits(2, 1);  

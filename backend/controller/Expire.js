@@ -17,7 +17,6 @@ class Expire {
       i++;
     });
     return t;
-
   }
 
   static async discard_all(body) {

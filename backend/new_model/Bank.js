@@ -49,15 +49,26 @@ class Bank {
     this.unit_ids = 0;
   }
 
+  // VERIFIED: AddUnit
   // Adds a new blood unit to the bank. Function Verified in DANFY.
-  // VERIFIED
   add_unit(new_unit) {
     this.units.push(new_unit);
   }
 
-  // Function returns a list of blood units which have a given type.
-  // Function has been verified in Dafny as 'filter' in the bank class.
-  // VERIFIED
+  // NOT VERIFIED: GetUnitById
+  // Gets a particular unit given an id
+  get_unit_by_id(id) {
+
+  }
+
+  // VERIFIED: GetUnitIndex
+  // Gets the index of a given unit
+  get_unit_index(unit) {
+
+  }
+
+  // VERIFIED: FilterUnits
+  // Function returns all of blood units of a given type.
   get_units_by_type(type) {
     let results = [];
     let index = 0;
@@ -70,10 +81,9 @@ class Bank {
     }
   }
 
+  // VERIFIED: FilterUnits
   // Function returns a list of blood units which have a given type and
-  // certain minimum expiry. Function has been verified in Dafny as 'filter'
-  // in the bank class.
-  // VERIFIED
+  // certain minimum expiry. 
   get_units_by_type_date(type, min_date) {
     let results = [];
     let index = 0;
@@ -86,9 +96,8 @@ class Bank {
     }
   }
 
+  // VERIFIED: FilterUnits
   // Function returns a list of blood units which have a certain minimum expiry. 
-  // Function has been verified in Dafny as 'filter' in the bank class.
-  // VERIFIED
   get_units_by_date(min_date) {
     let results = [];
     let index = 0;
@@ -99,6 +108,26 @@ class Bank {
         results.push(this.units[index])
       }
     }
+  }
+
+  // VERIFIED: FilterUnits
+  // Function returns a list containing every expired blood unit in the bank.
+  get_expired_units() {
+    let results = [];
+    let index = 0;
+    let limit = this.units.length;
+
+    while (index < limit) {
+      if (this.units[i].expired()) { 
+        results.push(this.units[index])
+      }
+    }
+  }
+
+  // VERIFIED: RemoveUnitByIndex
+  // Removes the unit at the given index
+  remove_unit_by_index(unit) {
+
   }
 
 }
