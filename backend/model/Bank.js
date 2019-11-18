@@ -98,6 +98,8 @@ class Bank {
         results.push(this.units[index])
       }
     }
+
+    return results;
   }
 
   // VERIFIED: FilterUnits
@@ -113,6 +115,8 @@ class Bank {
         results.push(this.units[index])
       }
     }
+
+    return results;
   }
 
   // VERIFIED: FilterUnits
@@ -127,6 +131,8 @@ class Bank {
         results.push(this.units[index])
       }
     }
+
+    return results;
   }
 
   // VERIFIED: FilterUnits
@@ -141,6 +147,8 @@ class Bank {
         results.push(this.units[index])
       }
     }
+
+    return results;
   }
 
   // VERIFIED: RemoveUnitByIndex
