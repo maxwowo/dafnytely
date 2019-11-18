@@ -94,7 +94,7 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[i].type == type) { 
+      if (this.units[index].type == type) { 
         results.push(this.units[index])
       }
     }
@@ -109,7 +109,7 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[i].type == type && this.units[i].before(min_date)) { 
+      if (this.units[index].type == type && this.units[index].before(min_date)) { 
         results.push(this.units[index])
       }
     }
@@ -123,7 +123,7 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[i].before(min_date)) { 
+      if (this.units[index].before(min_date)) { 
         results.push(this.units[index])
       }
     }
@@ -137,7 +137,7 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[i].expired()) { 
+      if (this.units[index].expired()) { 
         results.push(this.units[index])
       }
     }
