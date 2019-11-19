@@ -1,5 +1,6 @@
 
 const Bank = require('../model/Bank');
+const Orders = require('../model/Orders');
 const OrderItem = require('../schema/Order');
 
 const sort=(a,b)=>{
@@ -11,14 +12,6 @@ const sort=(a,b)=>{
 class Order {
 
     static async order_type_units(body){
-        // Get the expired units from the blood bank and 
-        // remove them
-        let remove = Bank.get_expired_units();                  // VERIFIED: FilterUnits
-        for (let i = 0; i < remove.length; i++) {
-            let index = Bank.get_unit_index(remove[i]);         // VERIFIED: FindUnitByIndex
-            Bank.remove_unit_by_index(index);                   // VERIFIED: RemoveUnitByIndex
-        }
-
         // Get all the fresh units matching the given type 
         let units = Bank.get_units_by_type(body.type).sort();   // VERIFIED: FilterUnits // NOT VERIFIED: sort
 
@@ -31,25 +24,18 @@ class Order {
         Bank.remove_ordered_units(units.slice(0, body.units));  // NOT VERIFIED: RemoveOrderedUnits
 
         // Add order to list of orders
-        schema.db.add_order(new OrderItem(body.type,body.units,null,schema.db.order_id));
+        Orders.add_order(new OrderItem(body.type,body.units,null,Orders.order_ids));
 
         // Return Result
-        return {list:r};
+        return {list:[]};
     }
 
     static async order_type_date_units(body){
-        // Get the expired units from the blood bank and 
-        // remove them
-        let remove = Bank.get_expired_units();                  // VERIFIED: FilterUnits
-        for (let i = 0; i < remove.length; i++) {
-            let index = Bank.get_unit_index(remove[i]);         // VERIFIED: FindUnitByIndex
-            Bank.remove_unit_by_index(index);                   // VERIFIED: RemoveUnitByIndex
-        }
-
         // Get all the fresh units matching the given type with
         // the specified minimum expiry
-        let units = Bank.get_units_by_type_date(body.type).sort();   // VERIFIED: FilterUnits // NOT VERIFIED: sort
+        let units = Bank.get_units_by_type_date(body.type, body.date).sort();   // VERIFIED: FilterUnits // NOT VERIFIED: sort
 
+        console.log(units);
         // Check that there is enough blood 
         if (units.length < body.units) {
             return {status:"not enought blood"};
@@ -59,10 +45,11 @@ class Order {
         Bank.remove_ordered_units(units.slice(0, body.units));  // NOT VERIFIED: RemoveOrderedUnits
 
         // Add order to list of orders
-        schema.db.add_order(new OrderItem(body.type,body.units,null,schema.db.order_id));
+        
+        Orders.add_order(new OrderItem(body.type,body.units,body.date,Orders.order_ids));
 
         // Return Result
-        return {list:r};
+        return {list: []};
     }
 
 }

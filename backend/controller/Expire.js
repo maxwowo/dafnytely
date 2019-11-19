@@ -6,18 +6,17 @@ class Expire {
   static async discard_by_id(body) {
     let res = { status: true };
     let id = body.id;
-
+    console.log("asgdgasd")
     // Gets the unit and its index 
     let unit = Bank.get_unit_by_id(id);                     // VERIFIED: GetUnitById
     let index = Bank.get_unit_index(unit);                  // VERIFIED: FindUnitIndex
-
+    console.log(Bank.units)
     // Checks whether the date is expired or not and removes 
     // the unit if it is expired.
-    if (unit.expired()) {
-        res = { status: 'target blood is not expired' };
-    } else {
-        Bank.remove_unit_by_index(index);                   // VERIFIED: RemoveUnitByIndex
-    }
+    if (!unit.expired()) {
+        return { status: 'target blood is not expired' };
+    } 
+    Bank.remove_unit_by_index(index);                   // VERIFIED: RemoveUnitByIndex
 
     // Return status object
     return res;
@@ -32,7 +31,7 @@ class Expire {
     // it from the bank
     for (let i = 0; i < remove.length; i++) {
         let index = Bank.get_unit_index(remove[i]);        // VERIFIED: FindUnitByIndex
-        Bank.remove_unit_by_index(index);                   // VERIFIED: RemoveUnitByIndex
+        Bank.remove_unit_by_index(index);                  // VERIFIED: RemoveUnitByIndex
     }
     
     // Return resultant units

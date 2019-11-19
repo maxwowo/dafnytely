@@ -58,13 +58,13 @@ class Bank {
   // VERIFIED: AddUnit
   // Adds a new blood unit to the bank. Function Verified in DANFY.
   add_unit(new_unit) {
-    this.units.push(new_unit);
+    this.units.push(new Unit(new_unit.id, new_unit.type, new_unit.arrival_date, new_unit.use_by_date, new_unit.donor_id, new_unit.lab_id));
   }
 
   // NOT VERIFIED: GetUnitById
   // Gets a particular unit given an id
   get_unit_by_id(id) {
-    for (let i = 0; i < units.length; i++) {
+    for (let i = 0; i < this.units.length; i++) {
       if (this.units[i].id === id) {
         return this.units[i];
       }
@@ -146,6 +146,7 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
+      
       if (this.units[index].expired()) { 
         results.push(this.units[index])
       }
@@ -158,7 +159,10 @@ class Bank {
   // VERIFIED: RemoveUnitByIndex
   // Removes the unit at the given index
   remove_unit_by_index(index) {
-    this.units = this.units.slice(0, index) + this.units.slice(index+1, this.units.length);
+ 
+    this.units.splice(index,1);
+
+    //this.units = this.units.slice(0, index) + this.units.slice(index+1, this.units.length);
   }
 
   // NOT VERIFIED: RemoveOrderedUnits

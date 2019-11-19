@@ -17,22 +17,22 @@ class QueryPage extends React.Component {
 
   refreshBloodList = () => {
     this.setState({ bloodList: [] });
-    for (let bloodType of bloodTypes) {
-      Axios.post(
-        '/query',
-        {
-          method: 'get_all_units'
-        }
-      ).then(
-        res => {
-          this.setState(
-            {
-              bloodList: [...this.state.bloodList, ...res.data.list]
-            }
-          );
-        }
-      );
-    }
+    
+    Axios.post(
+      '/query',
+      {
+        method: 'get_all_units'
+      }
+    ).then(
+      res => {
+        this.setState(
+          {
+            bloodList: [...this.state.bloodList, ...res.data.list]
+          }
+        );
+      }
+    );
+    
   };
 
   onBloodTypeChange = (

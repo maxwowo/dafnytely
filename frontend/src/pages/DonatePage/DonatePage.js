@@ -39,13 +39,21 @@ class DonatePage extends React.Component {
         for (let key in this.state) {
           this.setState({ [key]: undefined });
         }
+        notification['success'](
+          {
+            message: 'Donation submitted',
+            description: 'Your donation has been successfully recorded'
+          }
+        );
+      }else{
+        notification['error'](
+          {
+            message: 'Donation failed',
+            description: 'expired item'
+          }
+        );
       }
-      notification['success'](
-        {
-          message: 'Donation submitted',
-          description: 'Your donation has been successfully recorded'
-        }
-      );
+      
     });
   };
 
