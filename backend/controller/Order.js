@@ -51,7 +51,6 @@ class Order {
         // Return Result
         return {list: []};
     }
-
 }
 
 module.exports = Order;

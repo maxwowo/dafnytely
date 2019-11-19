@@ -7,7 +7,7 @@ class Orders {
 
     add_order(order) {
         this.order_id++;
-        this.orders.push(order);
+        this.orders.push(...order);
     }
 
     // NOT VERIFIED
