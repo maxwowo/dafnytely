@@ -216,6 +216,7 @@ method Main() {
     bank.RemoveUnitByIndex(i4); assert bank.units == [1,2,3];
     bank.AddUnit(4); assert bank.units == [1,2,3,4];
     unit := bank.GetUnitById(2); print unit, "\n";
+    // bank.RemoveOrderedUnits([2,3]); assert bank.units == [1,4];
 }
 
 
