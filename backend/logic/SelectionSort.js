@@ -1,4 +1,6 @@
-
+// Selection Sort function verified by Dafny
+// '<' operator substitued for given 'compare' 
+// function.
 const selectionSort = (a,compare)=>{
     if(a.length <= 1){
         return;
