@@ -151,6 +151,15 @@ class AdminPage extends React.Component {
                           <Col>
                             <Button
                               onClick={() => {
+                                document.location.reload()
+                              }}
+                            >
+                              Refresh
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
                                 Axios.post(
                                   '/expire',
                                   {
@@ -173,7 +182,7 @@ class AdminPage extends React.Component {
                                     );
                                     this.refreshExpiredBloodList();
                                   }
-                                })
+                                });
                               }}
                             >
                               Mark all as discarded
@@ -259,6 +268,15 @@ class AdminPage extends React.Component {
                           <Col>
                             <Button
                               onClick={() => {
+                                document.location.reload()
+                              }}
+                            >
+                              Refresh
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              onClick={() => {
                                 Axios.post(
                                   '/list',
                                   {
@@ -281,7 +299,7 @@ class AdminPage extends React.Component {
                                     );
                                     this.refreshOrderList();
                                   }
-                                })
+                                });
                               }}
                             >
                               Mark all as completed
