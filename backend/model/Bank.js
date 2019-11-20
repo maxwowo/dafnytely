@@ -73,7 +73,7 @@ class Bank {
     this.units.push(new_unit);
   }
 
-  // NOT VERIFIED: GetUnitById
+  // VERIFIED: GetUnitById
   // Gets a particular unit given an id
   get_unit_by_id(id) {
     for (let i = 0; i < this.units.length; i++) {
@@ -178,7 +178,6 @@ class Bank {
     this.units.splice(index,1);
   }
 
-  // NOT VERIFIED: RemoveOrderedUnits
   // Removes a list of units which have been ordered from the Bank
   remove_ordered_units(r_units) {
     r_units.forEach(a => this.units.splice(this.units.indexOf(a), 1));
