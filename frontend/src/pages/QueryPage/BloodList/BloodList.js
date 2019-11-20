@@ -1,5 +1,5 @@
 import React from 'react';
-import { Descriptions, Empty, List } from 'antd';
+import { Descriptions, Empty, List, Typography } from 'antd';
 import { BLOOD_UNIT_SIZE } from '../../../constants/bloodConstants';
 import styles from './BloodList.module.less';
 
@@ -18,7 +18,12 @@ const BloodList = (
         )
       }
     }
-    header='Blood list'
+    header={
+      <div>
+        <Typography.Text style={{marginRight: 50}}>Blood List</Typography.Text>
+        <Typography.Text>Total volume: {50 * bloodList.length}mL</Typography.Text>
+      </div>
+    }
     className={styles.list}
     dataSource={bloodList}
     renderItem={item => (
