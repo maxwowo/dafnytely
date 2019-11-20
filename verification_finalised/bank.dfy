@@ -45,12 +45,14 @@ class {:autocontracts} BloodBank {
     method AddUnit(unit: int) 
     requires !Full(); 
     requires unit >= 0;
-    requires unit !in units;
     ensures unit >= 0;
     ensures unit in units;
-    ensures units == old(units) + [unit]
+    ensures unit !in old(units) ==> units == old(units) + [unit]
+    ensures unit in old(units) ==> units == old(units)
     {
-        units := units + [unit];
+        if(unit !in units) {
+            units := units + [unit];
+        }
     }
 
     // NEEDS TO BE VERIFIED
@@ -58,15 +60,22 @@ class {:autocontracts} BloodBank {
     // matching id is simulated by the '==' relation since this
     // will be unique of the list of units in the bank.
     method GetUnitById(id: int) returns (unit: int)
+    ensures units == old(units);
+    ensures id in multiset(units[..]) ==> unit == id;
+    ensures id !in multiset(units[..]) ==> unit == -1;
     {
         unit := -1;
         var index, limit := 0, |units|;
         
         while index < limit 
         decreases limit - index;
-        invariant index <= limit;
+        invariant 0 <= index <= limit;
+        invariant forall i :: 0 <= i < index ==> id != units[i]
         {
-            if id == units[index] { unit := units[index]; }
+            if (id == units[index]) { 
+                unit := units[index]; 
+                break;
+            }
             index := index + 1;
         }
     }
