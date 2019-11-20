@@ -55,7 +55,7 @@ class {:autocontracts} BloodBank {
         }
     }
 
-    // NEEDS TO BE VERIFIED
+    // VERIFIED
     // Gets a unit with a given id from the list. In this case,
     // matching id is simulated by the '==' relation since this
     // will be unique of the list of units in the bank.

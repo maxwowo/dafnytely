@@ -65,12 +65,20 @@ class Bank {
   // VERIFIED: AddUnit
   // Adds a new blood unit to the bank. Function Verified in DANFY.
   add_unit(new_unit) {
+    // Model Dafny preconditions
+    if (this.units.length === 100000 || !(new_unit instanceof Unit)) {
+      return;
+    }
+    // Add the unit if it is not in the bank
+    let unit_in_bank = false;
     for (let i = 0; i < this.units.length; i++) {
       if (new_unit === this.units[i]) {
-        return 
+        unit_in_bank = true;
       }
     }
-    this.units.push(new_unit);
+    if (!unit_in_bank) {
+      this.units.push(new_unit);
+    }
   }
 
   // VERIFIED: GetUnitById
