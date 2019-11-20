@@ -154,8 +154,10 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[index].before(min_date) && 
-          !this.units[index].expired()) { 
+      if (this.units[index].before(min_date) 
+      
+          //&& !this.units[index].expired()
+        ) { 
         results.push(this.units[index])
       }
       index = index + 1;
