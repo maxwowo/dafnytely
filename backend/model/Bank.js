@@ -125,6 +125,23 @@ class Bank {
     return results;
   }
 
+  get_units_by_type_no_expire(type) {
+    let results = [];
+    let index = 0;
+    let limit = this.units.length;
+
+    while (index < limit) {
+      if (this.units[index].type === type 
+        &&!this.units[index].expired()
+        ) { 
+        results.push(this.units[index])
+      }
+      index = index + 1;
+    }
+
+    return results;
+  }
+
   // VERIFIED: FilterUnits
   // Function returns a list of blood units which have a given type and
   // certain minimum expiry. 

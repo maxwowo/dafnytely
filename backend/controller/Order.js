@@ -3,7 +3,7 @@ const Bank = require('../model/Bank');
 const Orders = require('../model/Orders');
 const OrderItem = require('../schema/Order');
 const selectionSort = require('../logic/SelectionSort');
-
+const Moment = require('moment')
 const compare=(a,b)=>{
     let adate = new Date(a.use_by_date);
     let bdate = new Date (b.use_by_date);
@@ -14,7 +14,7 @@ class Order {
 
     static async order_type_units(body){
         // Get all the fresh units matching the given type 
-        let units = Bank.get_units_by_type(body.type);   // VERIFIED: FilterUnits 
+        let units = Bank.get_units_by_type_no_expire(body.type);   // VERIFIED: FilterUnits 
         selectionSort(units,compare);
         
         // Check that there is enough blood 
@@ -27,14 +27,7 @@ class Order {
         Bank.remove_ordered_units(ordered);  
 
         // Get the minimum expiry 
-        let min_exp = 0;
-        for (let i = 0; i < ordered.length; i++) {
-            if (min_exp === 0) {
-                min_exp = ordered[i].use_by_date;
-            } else if (!ordered[i].before(min_exp)) {
-                min_exp = ordered[i].use_by_date;
-            }
-        }
+        let min_exp= Moment().format("YYYY-MM-DD");
 
         // Add order to list of orders
         Orders.add_order(new OrderItem(body.type,body.units,min_exp,Orders.get_new_id()));
