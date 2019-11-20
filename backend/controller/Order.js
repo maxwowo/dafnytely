@@ -22,10 +22,21 @@ class Order {
         }
 
         // Remove the number of ordered blood units from bank
-        Bank.remove_ordered_units(units.slice(0, body.units));  // NOT VERIFIED: RemoveOrderedUnits
+        let ordered = units.slice(0, body.units)
+        Bank.remove_ordered_units(ordered);  
+
+        // Get the minimum expiry 
+        let min_exp = 0;
+        for (let i = 0; i < ordered.length; i++) {
+            if (min_exp === 0) {
+                min_exp = ordered[i].use_by_date;
+            } else if (!ordered[i].before(min_exp)) {
+                min_exp = ordered[i].use_by_date;
+            }
+        }
 
         // Add order to list of orders
-        Orders.add_order(new OrderItem(body.type,body.units,null,Orders.order_ids));
+        Orders.add_order(new OrderItem(body.type,body.units,min_exp,Orders.order_ids));
 
         // Return Result
         return {list:[]};
@@ -36,7 +47,7 @@ class Order {
         // the specified minimum expiry
         let units = Bank.get_units_by_type_date(body.type, body.date);   // VERIFIED: FilterUnits // NOT VERIFIED: sort
         selectionSort(units,compare);
-        console.log(units);
+
         // Check that there is enough blood 
         if (units.length < body.units) {
             return {status:"not enought blood"};

@@ -50,15 +50,27 @@ class Bank {
 
     // Add defualt blood units to bank
     default_units.forEach(item => {
-      this.unit_ids++;
       this.units.push(new Unit(item.id, item.type, item.arrival_date, item.use_by_date, item.donor_id, item.lab_id));
+      this.unit_ids++;
     });
+  }
+
+  // Gets the next id for a blood unit
+  get_next_id() {
+    let id = this.unit_ids;
+    this.unit_ids++;
+    return id;
   }
 
   // VERIFIED: AddUnit
   // Adds a new blood unit to the bank. Function Verified in DANFY.
   add_unit(new_unit) {
-    this.units.push(new Unit(new_unit.id, new_unit.type, new_unit.arrival_date, new_unit.use_by_date, new_unit.donor_id, new_unit.lab_id));
+    for (let i = 0; i < this.units.length; i++) {
+      if (new_unit === this.units[i]) {
+        return 
+      }
+    }
+    this.units.push(new_unit);
   }
 
   // NOT VERIFIED: GetUnitById
@@ -94,7 +106,8 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[index].type === type) { 
+      if (this.units[index].type === type &&
+          !this.units[index].expired()) { 
         results.push(this.units[index])
       }
       index = index + 1;
@@ -112,7 +125,9 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[index].type === type && this.units[index].before(min_date)) { 
+      if (this.units[index].type === type && 
+          this.units[index].before(min_date) &&
+          !this.units[index].expired()) { 
         results.push(this.units[index])
       }
       index = index + 1;
@@ -129,7 +144,8 @@ class Bank {
     let limit = this.units.length;
 
     while (index < limit) {
-      if (this.units[index].before(min_date)) { 
+      if (this.units[index].before(min_date) && 
+          !this.units[index].expired()) { 
         results.push(this.units[index])
       }
       index = index + 1;
@@ -159,10 +175,7 @@ class Bank {
   // VERIFIED: RemoveUnitByIndex
   // Removes the unit at the given index
   remove_unit_by_index(index) {
- 
     this.units.splice(index,1);
-
-    //this.units = this.units.slice(0, index) + this.units.slice(index+1, this.units.length);
   }
 
   // NOT VERIFIED: RemoveOrderedUnits
