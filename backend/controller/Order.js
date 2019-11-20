@@ -16,6 +16,7 @@ class Order {
         // Get all the fresh units matching the given type 
         let units = Bank.get_units_by_type(body.type);   // VERIFIED: FilterUnits 
         selectionSort(units,compare);
+        
         // Check that there is enough blood 
         if (units.length < body.units) {
             return {status:"not enought blood"};
@@ -36,7 +37,7 @@ class Order {
         }
 
         // Add order to list of orders
-        Orders.add_order(new OrderItem(body.type,body.units,min_exp,Orders.order_ids));
+        Orders.add_order(new OrderItem(body.type,body.units,min_exp,Orders.get_new_id()));
 
         // Return Result
         return {list:[]};
@@ -57,8 +58,7 @@ class Order {
         Bank.remove_ordered_units(units.slice(0, body.units));  // NOT VERIFIED: RemoveOrderedUnits
 
         // Add order to list of orders
-        
-        Orders.add_order(new OrderItem(body.type,body.units,body.date,Orders.order_ids));
+        Orders.add_order(new OrderItem(body.type,body.units,body.date,Orders.get_new_id()));
 
         // Return Result
         return {list: []};

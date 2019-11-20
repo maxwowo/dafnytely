@@ -5,6 +5,12 @@ class Orders {
         this.order_ids = 0;
     }
 
+    get_new_id() {
+        let id = this.order_ids;
+        this.order_ids++;
+        return id;
+    }
+
     // VERFIIED: AddUnit
     add_order(order) {
         this.order_id++;
@@ -27,7 +33,7 @@ class Orders {
 
     // VERIFIED: RemoveByIndex
     remove_order_by_index(index) {
-        this.orders = this.orders.slice(0, index) + this.orders.slice(index+1, this.orders.length);
+        this.orders.splice(index, 1);
     }
 
     remove_all() {
