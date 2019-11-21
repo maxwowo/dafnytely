@@ -1,12 +1,31 @@
 import React from 'react';
 import FullSizeLayout from '../../components/FullSizeLayout/FullSizeLayout';
-import { Layout } from 'antd';
+import { Layout, Button } from 'antd';
 import Axios from 'axios';
 import SidePanel from './SidePanel/SidePanel';
 import BloodList from './BloodList/BloodList';
 import { bloodTypes } from '../../constants/bloodConstants';
 import styles from './QueryPage.module.less';
-
+const selectionSort = (a,compare)=>{
+  if(a.length <= 1){
+      return;
+  }
+  let i = 0;
+  while(i<a.length){
+      let li = i;
+      let j = i;
+      while(j < a.length){
+          if(compare(a[j], a[li])<0){
+              li = j;
+           }
+           j = j + 1;
+      }
+      let tmp =a[i]
+      a[i]=a[li];
+      a[li]=tmp;
+      i=i+1;
+  }
+}
 class QueryPage extends React.Component {
 
   state = {
@@ -104,6 +123,32 @@ class QueryPage extends React.Component {
         <Layout.Content
           className={styles.content}
         >
+          <Button style={{margin:"10px"}}
+          onClick={()=>{
+            let tmplist = [...this.state.bloodList];
+            
+            selectionSort(tmplist,(a,b)=>{
+              if(a.type < b.type)return -1;
+              return 1
+            })
+            console.log(tmplist)
+            this.setState({
+              bloodList:tmplist
+            })
+          }}>Sort by type</Button>
+          <Button style={{margin:"10px"}} onClick={()=>{
+            let tmplist = [...this.state.bloodList];
+            
+            selectionSort(tmplist,(a,b)=>{
+              let adate = new Date(a.use_by_date);
+              let bdate = new Date (b.use_by_date);
+              if (adate < bdate) { return 1; } else { return -1; };
+          })
+            console.log(tmplist)
+            this.setState({
+              bloodList:tmplist
+            })
+          }} >Sort by date</Button>
           <BloodList
             bloodList={this.state.bloodList}
           />
